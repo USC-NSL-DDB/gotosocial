@@ -20,7 +20,10 @@ package bundb
 import (
 	"context"
 	"errors"
+	"fmt"
+	"os"
 	"slices"
+	"strconv"
 	"time"
 
 	"github.com/superseriousbusiness/gotosocial/internal/db"
@@ -325,7 +328,33 @@ func (s *statusDB) PopulateStatus(ctx context.Context, status *gtsmodel.Status) 
 	return errs.Combine()
 }
 
+func msToTime(ms string) (time.Time, error) {
+	msInt, err := strconv.ParseInt(ms, 10, 64)
+	if err != nil {
+		return time.Time{}, err
+	}
+	return time.Unix(0, msInt*int64(time.Millisecond)), nil
+}
+
 func (s *statusDB) PutStatus(ctx context.Context, status *gtsmodel.Status) error {
+	federatedString := fmt.Sprintf("%+v", status.FetchedAt)
+
+	if federatedString == "0001-01-01 00:00:00 +0000 UTC" {
+		status.ContentWarning = fmt.Sprintf("%d", status.CreatedAt.UnixMilli())
+	} else {
+
+		remoteCreatedAt, err := msToTime(status.ContentWarning)
+		f, err := os.OpenFile("/tmp/tweet_fan_out_metrics", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0777)
+
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+		writeStr := fmt.Sprintf("ID: %+v, CreatedAt: %+v, ReceviedAt: %+v, Duration: %+v\n", status.ID, remoteCreatedAt, status.FetchedAt, status.FetchedAt.Sub(remoteCreatedAt))
+		if _, err = f.WriteString(writeStr); err != nil {
+			panic(err)
+		}
+	}
 	return s.state.Caches.GTS.Status.Store(status, func() error {
 		// It is safe to run this database transaction within cache.Store
 		// as the cache does not attempt a mutex lock until AFTER hook.

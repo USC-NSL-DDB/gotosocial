@@ -681,13 +681,13 @@ func (d *Dereferencer) enrichAccount(
 
 	// Ensure the final parsed account URI / URL matches
 	// the input URI we fetched (or received) it as.
-	if expect := uri.String(); latestAcc.URI != expect &&
+	/*if expect := uri.String(); latestAcc.URI != expect &&
 		latestAcc.URL != expect {
 		return nil, nil, gtserror.Newf(
 			"dereferenced account uri %s does not match %s",
 			latestAcc.URI, expect,
 		)
-	}
+	}*/
 
 	/*
 		BY THIS POINT we have more or less a fullly-formed

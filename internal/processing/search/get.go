@@ -196,7 +196,7 @@ func (p *Processor) Get(
 			// searching for anything except an account.
 			// As such, return early without falling
 			// through to broader search.
-			return p.packageSearchResult(
+			ret, err := p.packageSearchResult(
 				ctx,
 				account,
 				foundAccounts,
@@ -206,6 +206,7 @@ func (p *Processor) Get(
 				includeInstanceAccounts,
 				includeBlockedAccounts,
 			)
+			return ret, err
 		}
 	}
 

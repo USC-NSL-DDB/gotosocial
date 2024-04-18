@@ -20,6 +20,7 @@ package transport
 import (
 	"context"
 	"crypto"
+	//"fmt"
 	"errors"
 	"io"
 	"net/http"
@@ -105,7 +106,8 @@ func (t *transport) GET(r *http.Request) (*http.Response, error) {
 
 	// try again without the path included in the HTTP signature for better compatibility
 	_ = resp.Body.Close()
-	return t.controller.client.DoSigned(r, t.signGET(httpsig.SignatureOption{ExcludeQueryStringFromPathPseudoHeader: true}))
+	resp, err = t.controller.client.DoSigned(r, t.signGET(httpsig.SignatureOption{ExcludeQueryStringFromPathPseudoHeader: true}))
+	return resp, err
 }
 
 func (t *transport) POST(r *http.Request, body []byte) (*http.Response, error) {

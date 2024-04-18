@@ -22,7 +22,7 @@
 # String. Log level to use throughout the application. Must be lower-case.
 # Options: ["trace","debug","info","warn","error","fatal"]
 # Default: "info"
-log-level: "info"
+log-level: "debug"
 
 # Bool. Log database queries when log-level is set to debug or trace.
 # This setting produces verbose logs, so it's better to only enable it
@@ -62,7 +62,7 @@ landing-page-user: ""
 # DO NOT change this after your server has already run once, or you will break things!
 # Examples: ["gts.example.org","some.server.com"]
 # Default: "localhost"
-host: "localhost"
+host: "one.localhost"
 
 # String. Domain to use when federating profiles. This is useful when you want your server to be at
 # eg., "gts.example.org", but you want the domain on accounts to be "example.org" because it looks better
@@ -86,7 +86,7 @@ host: "localhost"
 #
 # Examples: ["example.org","server.com"]
 # Default: ""
-account-domain: ""
+account-domain: "one.localhost"
 
 # String. Protocol to use for the server. Only change to http for local testing!
 # This should be the protocol part of the URI that your server is actually reachable on. So even if you're
@@ -105,7 +105,7 @@ protocol: "https"
 # so that the proxy can't be bypassed.
 # Examples: ["0.0.0.0", "172.128.0.16", "localhost", "[::]", "[2001:db8::fed1]"]
 # Default: "0.0.0.0"
-bind-address: "0.0.0.0"
+bind-address: "localhost"
 
 # Int. Listen port for the GoToSocial webserver + API. If you're running behind a reverse proxy and/or in a docker,
 # container, just set this to whatever you like (or leave the default), and make sure it's forwarded properly.
@@ -149,7 +149,7 @@ db-type: "sqlite"
 #
 # Examples: ["localhost","my.db.host","127.0.0.1","192.111.39.110",":memory:", "sqlite.db"]
 # Default: ""
-db-address: ""
+db-address: "sqlite_test.db"
 
 # Int. Port for database connection.
 # Examples: [5432, 1234, 6969]
@@ -414,7 +414,7 @@ accounts-registration-open: true
 # Bool. Do sign up requests require approval from an admin/moderator before an account can sign in/use the server?
 # Options: [true, false]
 # Default: true
-accounts-approval-required: true
+accounts-approval-required: false
 
 # Bool. Are sign up requests required to submit a reason for the request (eg., an explanation of why they want to join the instance)?
 # Options: [true, false]
@@ -835,7 +835,7 @@ request-id-header: "X-Request-Id"
 
 # Bool. Enable OpenTelemetry based tracing support.
 # Default: false
-tracing-enabled: false
+tracing-enabled: true
 
 # String. Set the transport protocol for the tracing system. Can either be "grpc"
 # for OTLP gRPC, or "http" for OTLP HTTP.
@@ -847,11 +847,11 @@ tracing-transport: "grpc"
 # provide the endpoint as a single address/port combination without a protocol scheme.
 # Examples: ["localhost:4317"]
 # Default: ""
-tracing-endpoint: ""
+tracing-endpoint: "localhost:4317"
 
 # Bool. Disable TLS for the gRPC and HTTP transport protocols.
 # Default: false
-tracing-insecure-transport: false
+tracing-insecure-transport: true
 
 # Bool. Enable OpenTelemetry based metrics support.
 # Default: false
@@ -917,7 +917,7 @@ http-client:
   # - https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
   #
   # Both allow-ips and block-ips default to an empty array.
-  allow-ips: []
+  allow-ips: ["127.0.0.1/32", "::1/128", "192.168.1.1/32"]
   block-ips: []
 
   # Bool. Disable verification of TLS certificates of remote servers.
@@ -973,7 +973,7 @@ advanced-cookies-samesite: "lax"
 #
 # Examples: [1000, 500, 0]
 # Default: 300
-advanced-rate-limit-requests: 300
+advanced-rate-limit-requests: 0
 
 # Array of string. CIDRs to except from rate limit restrictions.
 # Any IPs inside the CIDR range(s) will not have rate limiting
