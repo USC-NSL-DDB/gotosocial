@@ -108,7 +108,7 @@ var Start action.GTSAction = func(ctx context.Context) error {
 	}
 
 	// Open the storage backend
-	storage, err := gtsstorage.AutoConfig()
+	storage, err := gtsstorage.AutoConfig("")
 	if err != nil {
 		return fmt.Errorf("error creating storage backend: %w", err)
 	}

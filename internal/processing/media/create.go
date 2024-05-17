@@ -29,7 +29,7 @@ import (
 )
 
 // Create creates a new media attachment belonging to the given account, using the request form.
-func (p *Processor) Create(ctx context.Context, account *gtsmodel.Account, form *apimodel.AttachmentRequest) (*apimodel.Attachment, gtserror.WithCode) {
+func (p *Processor) Create(ctx context.Context, id string, form *apimodel.AttachmentRequest) (*apimodel.Attachment, gtserror.WithCode) {
 	data := func(innerCtx context.Context) (io.ReadCloser, int64, error) {
 		f, err := form.File.Open()
 		return f, form.File.Size, err
@@ -42,7 +42,7 @@ func (p *Processor) Create(ctx context.Context, account *gtsmodel.Account, form 
 	}
 
 	// process the media attachment and load it immediately
-	media := p.mediaManager.PreProcessMedia(data, account.ID, &media.AdditionalMediaInfo{
+	media := p.mediaManager.PreProcessMedia(data, id, &media.AdditionalMediaInfo{
 		Description: &form.Description,
 		FocusX:      &focusX,
 		FocusY:      &focusY,

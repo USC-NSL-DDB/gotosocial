@@ -202,20 +202,24 @@ func (d *Driver) ProbeCSPUri(ctx context.Context) (string, error) {
 	return uStripped.String(), nil
 }
 
-func AutoConfig() (*Driver, error) {
+func AutoConfig(lock string) (*Driver, error) {
 	switch backend := config.GetStorageBackend(); backend {
 	case "s3":
 		return NewS3Storage()
 	case "local":
-		return NewFileStorage()
+		return NewFileStorage(lock)
 	default:
 		return nil, fmt.Errorf("invalid storage backend: %s", backend)
 	}
 }
 
-func NewFileStorage() (*Driver, error) {
+func NewFileStorage(lock string) (*Driver, error) {
 	// Load runtime configuration
+	lockFile := "store.lock"
 	basePath := config.GetStorageLocalBasePath()
+	if lock != "" {
+		lockFile = lock
+	}
 
 	// Open the disk storage implementation
 	disk, err := storage.OpenDisk(basePath, &storage.DiskConfig{
@@ -224,7 +228,7 @@ func NewFileStorage() (*Driver, error) {
 		// overwriting the lockfile if we store a file called 'store.lock'.
 		// However, in this case it's OK because the keys are set by
 		// GtS and not the user, so we know we're never going to overwrite it.
-		LockFile:     path.Join(basePath, "store.lock"),
+		LockFile:     path.Join(basePath, lockFile),
 		WriteBufSize: int(16 * bytesize.KiB),
 	})
 	if err != nil {

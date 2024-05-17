@@ -18,9 +18,11 @@
 package gtsmodel
 
 import "time"
+import "github.com/ServiceWeaver/weaver"
 
 // Emoji represents a custom emoji that's been uploaded through the admin UI or downloaded from a remote instance.
 type Emoji struct {
+	weaver.AutoMarshal
 	ID                     string         `bun:"type:CHAR(26),pk,nullzero,notnull,unique"`                    // id of this item in the database
 	CreatedAt              time.Time      `bun:"type:timestamptz,nullzero,notnull,default:current_timestamp"` // when was item created
 	UpdatedAt              time.Time      `bun:"type:timestamptz,nullzero,notnull,default:current_timestamp"` // when was item last updated

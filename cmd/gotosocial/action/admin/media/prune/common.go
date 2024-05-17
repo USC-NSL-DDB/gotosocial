@@ -53,7 +53,7 @@ func setupPrune(ctx context.Context) (*prune, error) {
 	state.DB = dbService
 
 	//nolint:contextcheck
-	storage, err := gtsstorage.AutoConfig()
+	storage, err := gtsstorage.AutoConfig("")
 	if err != nil {
 		return nil, fmt.Errorf("error creating storage backend: %w", err)
 	}

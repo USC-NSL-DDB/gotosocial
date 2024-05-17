@@ -28,6 +28,7 @@ import (
 
 	"github.com/superseriousbusiness/gotosocial/internal/config"
 	"github.com/superseriousbusiness/gotosocial/internal/log"
+	"github.com/ServiceWeaver/weaver"
 )
 
 // Account represents either a local or a remote fediverse account, gotosocial or otherwise (mastodon, pleroma, etc).
@@ -184,6 +185,7 @@ type AccountToEmoji struct {
 // VerifiedAt is optional, to be used only if Value is a URL to a webpage that contains the
 // username of the user.
 type Field struct {
+	weaver.AutoMarshal
 	Name       string    // Name of this field.
 	Value      string    // Value of this field.
 	VerifiedAt time.Time `bun:",nullzero"` // This field was verified at (optional).
@@ -191,6 +193,7 @@ type Field struct {
 
 // Relationship describes a requester's relationship with another account.
 type Relationship struct {
+	weaver.AutoMarshal
 	ID                  string // The account id.
 	Following           bool   // Are you following this user?
 	ShowingReblogs      bool   // Are you receiving this user's boosts in your home timeline?

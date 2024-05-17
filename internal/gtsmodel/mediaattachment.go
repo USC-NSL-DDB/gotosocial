@@ -19,11 +19,13 @@ package gtsmodel
 
 import (
 	"time"
+	"github.com/ServiceWeaver/weaver"
 )
 
 // MediaAttachment represents a user-uploaded media attachment: an image/video/audio/gif that is
 // somewhere in storage and that can be retrieved and served by the router.
 type MediaAttachment struct {
+	weaver.AutoMarshal
 	ID                string           `bun:"type:CHAR(26),pk,nullzero,notnull,unique"`                    // id of this item in the database
 	CreatedAt         time.Time        `bun:"type:timestamptz,nullzero,notnull,default:current_timestamp"` // when was item created
 	UpdatedAt         time.Time        `bun:"type:timestamptz,nullzero,notnull,default:current_timestamp"` // when was item last updated
@@ -46,6 +48,7 @@ type MediaAttachment struct {
 
 // File refers to the metadata for the whole file
 type File struct {
+	weaver.AutoMarshal
 	Path        string    `bun:",nullzero,notnull"`                                           // Path of the file in storage.
 	ContentType string    `bun:",nullzero,notnull"`                                           // MIME content type of the file.
 	FileSize    int       `bun:",notnull"`                                                    // File size in bytes
@@ -54,6 +57,7 @@ type File struct {
 
 // Thumbnail refers to a small image thumbnail derived from a larger image, video, or audio file.
 type Thumbnail struct {
+	weaver.AutoMarshal
 	Path        string    `bun:",nullzero,notnull"`                                           // Path of the file in storage.
 	ContentType string    `bun:",nullzero,notnull"`                                           // MIME content type of the file.
 	FileSize    int       `bun:",notnull"`                                                    // File size in bytes
@@ -87,6 +91,7 @@ const (
 
 // FileMeta describes metadata about the actual contents of the file.
 type FileMeta struct {
+	weaver.AutoMarshal
 	Original Original `bun:"embed:original_"`
 	Small    Small    `bun:"embed:small_"`
 	Focus    Focus    `bun:"embed:focus_"`
@@ -94,6 +99,7 @@ type FileMeta struct {
 
 // Small can be used for a thumbnail of any media type
 type Small struct {
+	weaver.AutoMarshal
 	Width  int     // width in pixels
 	Height int     // height in pixels
 	Size   int     // size in pixels (width * height)
@@ -102,6 +108,7 @@ type Small struct {
 
 // Original can be used for original metadata for any media type
 type Original struct {
+	weaver.AutoMarshal
 	Width     int      // width in pixels
 	Height    int      // height in pixels
 	Size      int      // size in pixels (width * height)
@@ -114,6 +121,7 @@ type Original struct {
 // Focus describes the 'center' of the image for display purposes.
 // X and Y should each be between -1 and 1
 type Focus struct {
+	weaver.AutoMarshal
 	X float32
 	Y float32
 }

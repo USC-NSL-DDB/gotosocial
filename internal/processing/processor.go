@@ -202,3 +202,36 @@ func NewProcessor(
 
 	return processor
 }
+
+// NewProcessor returns a new Processor.
+func NewProcessorWithMedia(
+	converter *typeutils.Converter,
+	mediaManager *mm.Manager,
+	state *state.State,
+) *Processor {
+
+	processor := &Processor{
+		converter:        converter,
+		state:            state,
+		formatter:        text.NewFormatter(state.DB),
+	}
+
+	// Instantiate sub processors.
+	//
+	// Start with sub processors that will
+	// be required by the workers processor.
+	processor.media = media.New(state, converter, mediaManager, nil)
+	processor.workers = workers.New(
+		state,
+		nil,
+		converter,
+		nil,
+		nil,
+		nil,
+		&processor.media,
+		nil,
+	)
+
+	return processor
+}
+
