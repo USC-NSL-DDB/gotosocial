@@ -19,7 +19,7 @@ package media
 
 import (
 	"context"
-	//"errors"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -39,22 +39,30 @@ import (
 	"github.com/superseriousbusiness/gotosocial/internal/typeutils"
 )
 
-var requestHandler MediaRequestHandler
+type MediaRequestOperation int
+
+const (
+	CREATE_MEDIA MediaRequestOperation = 0
+	UPDATE_MEDIA MediaRequestOperation = 1
+	GET_MEDIA    MediaRequestOperation = 2
+)
+
+//var requestHandler MediaRequestHandler
 
 type MediaRequestHandler interface {
-	Create(ctx context.Context, id string, form *apimodel.AttachmentRequest) (*apimodel.Attachment, error)
+	DoOperation(ctx context.Context, id string, form *apimodel.AttachmentRequest, attachmentID string, formUpdate *apimodel.AttachmentUpdateRequest, op MediaRequestOperation) (*apimodel.Attachment, error)
 }
 
 type mediaRequestHandler struct {
 	weaver.Implements[MediaRequestHandler]
 }
 
-type app struct {
+type MediaServiceComponent struct {
 	weaver.Implements[weaver.Main]
 	mediaHandler weaver.Ref[MediaRequestHandler]
 }
 
-func (r *mediaRequestHandler) Create(ctx context.Context, id string, form *apimodel.AttachmentRequest) (*apimodel.Attachment, error) {
+func (r *mediaRequestHandler) DoOperation(ctx context.Context, id string, form *apimodel.AttachmentRequest, attachmentID string, formUpdate *apimodel.AttachmentUpdateRequest, op MediaRequestOperation) (*apimodel.Attachment, error) {
 	var state state.State
 
 	// Initialize caches
@@ -80,7 +88,7 @@ func (r *mediaRequestHandler) Create(ctx context.Context, id string, form *apimo
 	}
 
 	// Open the storage backend
-	storage, err := gtsstorage.AutoConfig("hello.lock")
+	storage, err := gtsstorage.AutoConfig(typeutils.RandStringRunes(5) + ".lock")
 	if err != nil {
 		return nil, fmt.Errorf("error creating storage backend: %w", err)
 	}
@@ -109,14 +117,32 @@ func (r *mediaRequestHandler) Create(ctx context.Context, id string, form *apimo
 	typeConverter := typeutils.NewConverter(&state)
 	processor := processing.NewProcessorWithMedia(typeConverter, mediaManager, &state)
 
-	apiAttachment, _ := processor.Media().Create(ctx, id, form)
+	var apiAttachment *apimodel.Attachment
+
+	switch op {
+	case CREATE_MEDIA:
+		apiAttachment, _ = processor.Media().Create(ctx, id, form)
+	case UPDATE_MEDIA:
+		apiAttachment, _ = processor.Media().Update(ctx, id, attachmentID, formUpdate)
+	case GET_MEDIA:
+		apiAttachment, _ = processor.Media().Get(ctx, id, attachmentID)
+	default:
+		return nil, fmt.Errorf("invalid media operation")
+	}
 
 	return apiAttachment, nil
 }
 
-func serve(ctx context.Context, app *app) error {
-	requestHandler = app.mediaHandler.Get()
+func (m *Module) CreateMediaRequestHandler(ctx context.Context, mediaService *MediaServiceComponent) error {
+	fmt.Printf("created service weaver component\n")
+	m.requestHandler = mediaService.mediaHandler.Get()
 	return nil
+}
+
+func (m *Module) InitMediaServiceComponent() {
+	if err := weaver.Run(context.Background(), m.CreateMediaRequestHandler); err != nil {
+		fmt.Printf("Unable to create service weaver component: %w\n", err)
+	}
 }
 
 // MediaCreatePOSTHandler swagger:operation POST /api/{api_version}/media mediaCreate
@@ -182,9 +208,6 @@ func serve(ctx context.Context, app *app) error {
 //		'500':
 //			description: internal server error
 func (m *Module) MediaCreatePOSTHandler(c *gin.Context) {
-	if err := weaver.Run(context.Background(), serve); err != nil {
-		fmt.Printf("Unable to create service weaver component: %w\n", err)
-	}
 	apiVersion, errWithCode := apiutil.ParseAPIVersion(
 		c.Param(apiutil.APIVersionKey),
 		[]string{apiutil.APIv1, apiutil.APIv2}...,
@@ -216,7 +239,7 @@ func (m *Module) MediaCreatePOSTHandler(c *gin.Context) {
 		return
 	}
 
-	apiAttachment, err := requestHandler.Create(c.Request.Context(), authed.Account.ID, form)
+	apiAttachment, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account.ID, form, "", nil, CREATE_MEDIA)
 	if err != nil {
 		apiutil.ErrorHandler(c, gtserror.NewErrorBadRequest(err, err.Error()), m.processor.InstanceGetV1)
 		return

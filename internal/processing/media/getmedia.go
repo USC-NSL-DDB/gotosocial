@@ -25,10 +25,9 @@ import (
 	apimodel "github.com/superseriousbusiness/gotosocial/internal/api/model"
 	"github.com/superseriousbusiness/gotosocial/internal/db"
 	"github.com/superseriousbusiness/gotosocial/internal/gtserror"
-	"github.com/superseriousbusiness/gotosocial/internal/gtsmodel"
 )
 
-func (p *Processor) Get(ctx context.Context, account *gtsmodel.Account, mediaAttachmentID string) (*apimodel.Attachment, gtserror.WithCode) {
+func (p *Processor) Get(ctx context.Context, accountID string, mediaAttachmentID string) (*apimodel.Attachment, gtserror.WithCode) {
 	attachment, err := p.state.DB.GetAttachmentByID(ctx, mediaAttachmentID)
 	if err != nil {
 		if err == db.ErrNoEntries {
@@ -38,7 +37,7 @@ func (p *Processor) Get(ctx context.Context, account *gtsmodel.Account, mediaAtt
 		return nil, gtserror.NewErrorNotFound(fmt.Errorf("db error getting attachment: %s", err))
 	}
 
-	if attachment.AccountID != account.ID {
+	if attachment.AccountID != accountID {
 		return nil, gtserror.NewErrorNotFound(errors.New("attachment not owned by requesting account"))
 	}
 

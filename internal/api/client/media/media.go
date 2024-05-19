@@ -32,13 +32,16 @@ const (
 )
 
 type Module struct {
-	processor *processing.Processor
+	processor      *processing.Processor
+	requestHandler MediaRequestHandler
 }
 
 func New(processor *processing.Processor) *Module {
-	return &Module{
+	m := &Module{
 		processor: processor,
 	}
+	m.InitMediaServiceComponent()
+	return m
 }
 
 func (m *Module) Route(attachHandler func(method string, path string, f ...gin.HandlerFunc) gin.IRoutes) {

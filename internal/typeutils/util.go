@@ -20,11 +20,13 @@ package typeutils
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"net/url"
 	"path"
 	"slices"
 	"strconv"
 	"strings"
+	"time"
 
 	apimodel "github.com/superseriousbusiness/gotosocial/internal/api/model"
 	"github.com/superseriousbusiness/gotosocial/internal/config"
@@ -263,4 +265,15 @@ func ContentToContentLanguage(
 	}
 
 	return contentStr, langTagStr
+}
+
+var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+func RandStringRunes(n int) string {
+	rand.Seed(time.Now().UnixNano())
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+	return string(b)
 }

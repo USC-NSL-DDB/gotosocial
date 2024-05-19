@@ -18,7 +18,7 @@ func init() {
 	codegen.Register(codegen.Registration{
 		Name:  "github.com/ServiceWeaver/weaver/Main",
 		Iface: reflect.TypeOf((*weaver.Main)(nil)).Elem(),
-		Impl:  reflect.TypeOf(app{}),
+		Impl:  reflect.TypeOf(MediaServiceComponent{}),
 		LocalStubFn: func(impl any, caller string, tracer trace.Tracer) any {
 			return main_local_stub{impl: impl.(weaver.Main), tracer: tracer}
 		},
@@ -36,10 +36,10 @@ func init() {
 		Iface: reflect.TypeOf((*MediaRequestHandler)(nil)).Elem(),
 		Impl:  reflect.TypeOf(mediaRequestHandler{}),
 		LocalStubFn: func(impl any, caller string, tracer trace.Tracer) any {
-			return mediaRequestHandler_local_stub{impl: impl.(MediaRequestHandler), tracer: tracer, createMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/superseriousbusiness/gotosocial/internal/api/client/media/MediaRequestHandler", Method: "Create", Remote: false, Generated: true})}
+			return mediaRequestHandler_local_stub{impl: impl.(MediaRequestHandler), tracer: tracer, doOperationMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/superseriousbusiness/gotosocial/internal/api/client/media/MediaRequestHandler", Method: "DoOperation", Remote: false, Generated: true})}
 		},
 		ClientStubFn: func(stub codegen.Stub, caller string) any {
-			return mediaRequestHandler_client_stub{stub: stub, createMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/superseriousbusiness/gotosocial/internal/api/client/media/MediaRequestHandler", Method: "Create", Remote: true, Generated: true})}
+			return mediaRequestHandler_client_stub{stub: stub, doOperationMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/superseriousbusiness/gotosocial/internal/api/client/media/MediaRequestHandler", Method: "DoOperation", Remote: true, Generated: true})}
 		},
 		ServerStubFn: func(impl any, addLoad func(uint64, float64)) codegen.Server {
 			return mediaRequestHandler_server_stub{impl: impl.(MediaRequestHandler), addLoad: addLoad}
@@ -52,11 +52,11 @@ func init() {
 }
 
 // weaver.InstanceOf checks.
-var _ weaver.InstanceOf[weaver.Main] = (*app)(nil)
+var _ weaver.InstanceOf[weaver.Main] = (*MediaServiceComponent)(nil)
 var _ weaver.InstanceOf[MediaRequestHandler] = (*mediaRequestHandler)(nil)
 
 // weaver.Router checks.
-var _ weaver.Unrouted = (*app)(nil)
+var _ weaver.Unrouted = (*MediaServiceComponent)(nil)
 var _ weaver.Unrouted = (*mediaRequestHandler)(nil)
 
 // Local stub implementations.
@@ -70,22 +70,22 @@ type main_local_stub struct {
 var _ weaver.Main = (*main_local_stub)(nil)
 
 type mediaRequestHandler_local_stub struct {
-	impl          MediaRequestHandler
-	tracer        trace.Tracer
-	createMetrics *codegen.MethodMetrics
+	impl               MediaRequestHandler
+	tracer             trace.Tracer
+	doOperationMetrics *codegen.MethodMetrics
 }
 
 // Check that mediaRequestHandler_local_stub implements the MediaRequestHandler interface.
 var _ MediaRequestHandler = (*mediaRequestHandler_local_stub)(nil)
 
-func (s mediaRequestHandler_local_stub) Create(ctx context.Context, a0 string, a1 *model.AttachmentRequest) (r0 *model.Attachment, err error) {
+func (s mediaRequestHandler_local_stub) DoOperation(ctx context.Context, a0 string, a1 *model.AttachmentRequest, a2 string, a3 *model.AttachmentUpdateRequest, a4 MediaRequestOperation) (r0 *model.Attachment, err error) {
 	// Update metrics.
-	begin := s.createMetrics.Begin()
-	defer func() { s.createMetrics.End(begin, err != nil, 0, 0) }()
+	begin := s.doOperationMetrics.Begin()
+	defer func() { s.doOperationMetrics.End(begin, err != nil, 0, 0) }()
 	span := trace.SpanFromContext(ctx)
 	if span.SpanContext().IsValid() {
 		// Create a child span for this method.
-		ctx, span = s.tracer.Start(ctx, "media.MediaRequestHandler.Create", trace.WithSpanKind(trace.SpanKindInternal))
+		ctx, span = s.tracer.Start(ctx, "media.MediaRequestHandler.DoOperation", trace.WithSpanKind(trace.SpanKindInternal))
 		defer func() {
 			if err != nil {
 				span.RecordError(err)
@@ -95,7 +95,7 @@ func (s mediaRequestHandler_local_stub) Create(ctx context.Context, a0 string, a
 		}()
 	}
 
-	return s.impl.Create(ctx, a0, a1)
+	return s.impl.DoOperation(ctx, a0, a1, a2, a3, a4)
 }
 
 // Client stub implementations.
@@ -108,23 +108,23 @@ type main_client_stub struct {
 var _ weaver.Main = (*main_client_stub)(nil)
 
 type mediaRequestHandler_client_stub struct {
-	stub          codegen.Stub
-	createMetrics *codegen.MethodMetrics
+	stub               codegen.Stub
+	doOperationMetrics *codegen.MethodMetrics
 }
 
 // Check that mediaRequestHandler_client_stub implements the MediaRequestHandler interface.
 var _ MediaRequestHandler = (*mediaRequestHandler_client_stub)(nil)
 
-func (s mediaRequestHandler_client_stub) Create(ctx context.Context, a0 string, a1 *model.AttachmentRequest) (r0 *model.Attachment, err error) {
+func (s mediaRequestHandler_client_stub) DoOperation(ctx context.Context, a0 string, a1 *model.AttachmentRequest, a2 string, a3 *model.AttachmentUpdateRequest, a4 MediaRequestOperation) (r0 *model.Attachment, err error) {
 	// Update metrics.
 	var requestBytes, replyBytes int
-	begin := s.createMetrics.Begin()
-	defer func() { s.createMetrics.End(begin, err != nil, requestBytes, replyBytes) }()
+	begin := s.doOperationMetrics.Begin()
+	defer func() { s.doOperationMetrics.End(begin, err != nil, requestBytes, replyBytes) }()
 
 	span := trace.SpanFromContext(ctx)
 	if span.SpanContext().IsValid() {
 		// Create a child span for this method.
-		ctx, span = s.stub.Tracer().Start(ctx, "media.MediaRequestHandler.Create", trace.WithSpanKind(trace.SpanKindClient))
+		ctx, span = s.stub.Tracer().Start(ctx, "media.MediaRequestHandler.DoOperation", trace.WithSpanKind(trace.SpanKindClient))
 	}
 
 	defer func() {
@@ -148,6 +148,9 @@ func (s mediaRequestHandler_client_stub) Create(ctx context.Context, a0 string, 
 	enc := codegen.NewEncoder()
 	enc.String(a0)
 	serviceweaver_enc_ptr_AttachmentRequest_26f527db(enc, a1)
+	enc.String(a2)
+	serviceweaver_enc_ptr_AttachmentUpdateRequest_7d9aafff(enc, a3)
+	enc.Int((int)(a4))
 	var shardKey uint64
 
 	// Call the remote method.
@@ -219,14 +222,14 @@ var _ codegen.Server = (*mediaRequestHandler_server_stub)(nil)
 // GetStubFn implements the codegen.Server interface.
 func (s mediaRequestHandler_server_stub) GetStubFn(method string) func(ctx context.Context, args []byte) ([]byte, error) {
 	switch method {
-	case "Create":
-		return s.create
+	case "DoOperation":
+		return s.doOperation
 	default:
 		return nil
 	}
 }
 
-func (s mediaRequestHandler_server_stub) create(ctx context.Context, args []byte) (res []byte, err error) {
+func (s mediaRequestHandler_server_stub) doOperation(ctx context.Context, args []byte) (res []byte, err error) {
 	// Catch and return any panics detected during encoding/decoding/rpc.
 	defer func() {
 		if err == nil {
@@ -240,11 +243,17 @@ func (s mediaRequestHandler_server_stub) create(ctx context.Context, args []byte
 	a0 = dec.String()
 	var a1 *model.AttachmentRequest
 	a1 = serviceweaver_dec_ptr_AttachmentRequest_26f527db(dec)
+	var a2 string
+	a2 = dec.String()
+	var a3 *model.AttachmentUpdateRequest
+	a3 = serviceweaver_dec_ptr_AttachmentUpdateRequest_7d9aafff(dec)
+	var a4 MediaRequestOperation
+	*(*int)(&a4) = dec.Int()
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
 	// Call the local method.
-	r0, appErr := s.impl.Create(ctx, a0, a1)
+	r0, appErr := s.impl.DoOperation(ctx, a0, a1, a2, a3, a4)
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
@@ -269,8 +278,8 @@ type mediaRequestHandler_reflect_stub struct {
 // Check that mediaRequestHandler_reflect_stub implements the MediaRequestHandler interface.
 var _ MediaRequestHandler = (*mediaRequestHandler_reflect_stub)(nil)
 
-func (s mediaRequestHandler_reflect_stub) Create(ctx context.Context, a0 string, a1 *model.AttachmentRequest) (r0 *model.Attachment, err error) {
-	err = s.caller("Create", ctx, []any{a0, a1}, []any{&r0})
+func (s mediaRequestHandler_reflect_stub) DoOperation(ctx context.Context, a0 string, a1 *model.AttachmentRequest, a2 string, a3 *model.AttachmentUpdateRequest, a4 MediaRequestOperation) (r0 *model.Attachment, err error) {
+	err = s.caller("DoOperation", ctx, []any{a0, a1, a2, a3, a4}, []any{&r0})
 	return
 }
 
@@ -291,6 +300,24 @@ func serviceweaver_dec_ptr_AttachmentRequest_26f527db(dec *codegen.Decoder) *mod
 	}
 	var res model.AttachmentRequest
 	dec.DecodeBinaryUnmarshaler(&res)
+	return &res
+}
+
+func serviceweaver_enc_ptr_AttachmentUpdateRequest_7d9aafff(enc *codegen.Encoder, arg *model.AttachmentUpdateRequest) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_AttachmentUpdateRequest_7d9aafff(dec *codegen.Decoder) *model.AttachmentUpdateRequest {
+	if !dec.Bool() {
+		return nil
+	}
+	var res model.AttachmentUpdateRequest
+	(&res).WeaverUnmarshal(dec)
 	return &res
 }
 
