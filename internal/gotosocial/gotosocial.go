@@ -20,6 +20,7 @@ package gotosocial
 import (
 	"context"
 
+	"github.com/ServiceWeaver/weaver"
 	"github.com/superseriousbusiness/gotosocial/internal/cleaner"
 	"github.com/superseriousbusiness/gotosocial/internal/db"
 	"github.com/superseriousbusiness/gotosocial/internal/router"
@@ -28,9 +29,10 @@ import (
 // Server represents a long-running
 // GoToSocial server instance.
 type Server struct {
-	db        db.DB
-	apiRouter *router.Router
-	cleaner   *cleaner.Cleaner
+	db             db.DB
+	apiRouter      *router.Router
+	cleaner        *cleaner.Cleaner
+	weaverListener *weaver.Listener
 }
 
 // NewServer returns a new
@@ -41,9 +43,24 @@ func NewServer(
 	cleaner *cleaner.Cleaner,
 ) *Server {
 	return &Server{
-		db:        db,
-		apiRouter: apiRouter,
-		cleaner:   cleaner,
+		db:             db,
+		apiRouter:      apiRouter,
+		cleaner:        cleaner,
+		weaverListener: nil,
+	}
+}
+
+func NewServerWithServiceWeaverListener(
+	db db.DB,
+	apiRouter *router.Router,
+	cleaner *cleaner.Cleaner,
+	weaverListener *weaver.Listener,
+) *Server {
+	return &Server{
+		db:             db,
+		apiRouter:      apiRouter,
+		cleaner:        cleaner,
+		weaverListener: weaverListener,
 	}
 }
 
@@ -51,7 +68,7 @@ func NewServer(
 // then the cleaner. If something goes wrong while starting the
 // server, then an error will be returned.
 func (s *Server) Start(ctx context.Context) error {
-	s.apiRouter.Start()
+	s.apiRouter.Start(s.weaverListener)
 	return s.cleaner.ScheduleJobs()
 }
 

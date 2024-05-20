@@ -27,10 +27,12 @@ import (
 
 	"codeberg.org/gruf/go-bytesize"
 	"codeberg.org/gruf/go-debug"
+	"github.com/ServiceWeaver/weaver"
 	"github.com/gin-gonic/gin"
 	"github.com/superseriousbusiness/gotosocial/internal/config"
 	"github.com/superseriousbusiness/gotosocial/internal/gtserror"
 	"github.com/superseriousbusiness/gotosocial/internal/log"
+
 	"golang.org/x/crypto/acme/autocert"
 )
 
@@ -122,7 +124,7 @@ func New(ctx context.Context) (*Router, error) {
 //
 // It will serve two handlers if letsencrypt is enabled,
 // and only the web/API handler if letsencrypt is not enabled.
-func (r *Router) Start() {
+func (r *Router) Start(weaverListener *weaver.Listener) {
 	var (
 		// listen is the server start function.
 		// By default this points to a regular
@@ -170,13 +172,22 @@ func (r *Router) Start() {
 		r.srv.WriteTimeout = 0
 	}
 
-	// Start the main listener.
-	go func() {
-		log.Infof(nil, "listening on %s", r.srv.Addr)
-		if err := listen(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf(nil, "listen: %s", err)
-		}
-	}()
+	if weaverListener == nil {
+		// Start the main listener.
+		go func() {
+			log.Infof(nil, "listening on %s", r.srv.Addr)
+			if err := listen(); err != nil && err != http.ErrServerClosed {
+				log.Fatalf(nil, "listen: %s", err)
+			}
+		}()
+	} else {
+		go func() {
+			log.Infof(nil, "listening on service weaver configured listener and original listener in config %s", r.srv.Addr)
+			if err := http.Serve(weaverListener, r.srv.Handler); err != nil {
+				log.Fatalf(nil, "service weaver listener: %s", err)
+			}
+		}()
+	}
 }
 
 // Stop shuts down the router nicely

@@ -16,9 +16,10 @@ import (
 
 func init() {
 	codegen.Register(codegen.Registration{
-		Name:  "github.com/ServiceWeaver/weaver/Main",
-		Iface: reflect.TypeOf((*weaver.Main)(nil)).Elem(),
-		Impl:  reflect.TypeOf(App{}),
+		Name:      "github.com/ServiceWeaver/weaver/Main",
+		Iface:     reflect.TypeOf((*weaver.Main)(nil)).Elem(),
+		Impl:      reflect.TypeOf(App{}),
+		Listeners: []string{"gotosocial"},
 		LocalStubFn: func(impl any, caller string, tracer trace.Tracer) any {
 			return main_local_stub{impl: impl.(weaver.Main), tracer: tracer}
 		},
@@ -29,7 +30,7 @@ func init() {
 		ReflectStubFn: func(caller func(string, context.Context, []any, []any) error) any {
 			return main_reflect_stub{caller: caller}
 		},
-		RefData: "⟦58ea55b5:wEaVeReDgE:github.com/ServiceWeaver/weaver/Main→github.com/superseriousbusiness/gotosocial/internal/weaver/MediaRequestHandler⟧\n",
+		RefData: "⟦58ea55b5:wEaVeReDgE:github.com/ServiceWeaver/weaver/Main→github.com/superseriousbusiness/gotosocial/internal/weaver/MediaRequestHandler⟧\n⟦ebe7fb3f:wEaVeRlIsTeNeRs:github.com/ServiceWeaver/weaver/Main→gotosocial⟧\n",
 	})
 	codegen.Register(codegen.Registration{
 		Name:  "github.com/superseriousbusiness/gotosocial/internal/weaver/MediaRequestHandler",

@@ -1,0 +1,11 @@
+[serviceweaver]
+name = "gotosocial"
+binary = "./gotosocial"
+args = ["--config-path", "config.yaml", "server", "start"]
+env = ["DEBUG=1"]
+
+[single]
+listeners.gotosocial = {address = "localhost:8080"}
+
+[multi]
+listeners.gotosocial = {address = "localhost:8080"}

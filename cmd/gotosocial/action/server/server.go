@@ -352,7 +352,7 @@ var Start action.GTSAction = func(ctx context.Context) error {
 	webModule.Route(router, fsMainLimit, fsThrottle, gzip)
 
 	// Start the GoToSocial server.
-	server := gotosocial.NewServer(dbService, router, cleaner)
+	server := gotosocial.NewServerWithServiceWeaverListener(dbService, router, cleaner, serviceWeaverAppContext.ServiceWeaverListener)
 	if err := server.Start(ctx); err != nil {
 		return fmt.Errorf("error starting gotosocial service: %s", err)
 	}
