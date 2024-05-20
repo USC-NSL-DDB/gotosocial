@@ -28,6 +28,7 @@ import (
 	"github.com/superseriousbusiness/gotosocial/internal/config"
 	"github.com/superseriousbusiness/gotosocial/internal/gtserror"
 	"github.com/superseriousbusiness/gotosocial/internal/oauth"
+	internalweaver "github.com/superseriousbusiness/gotosocial/internal/weaver"
 )
 
 // MediaPUTHandler swagger:operation PUT /api/v1/media/{id} mediaUpdate
@@ -135,12 +136,7 @@ func (m *Module) MediaPUTHandler(c *gin.Context) {
 		return
 	}
 
-	/*attachment, errWithCode := m.processor.Media().Update(c.Request.Context(), authed.Account.ID, attachmentID, form)
-	if errWithCode != nil {
-		apiutil.ErrorHandler(c, errWithCode, m.processor.InstanceGetV1)
-		return
-	}*/
-	attachment, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account.ID, nil, attachmentID, form, UPDATE_MEDIA)
+	attachment, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account.ID, nil, attachmentID, form, internalweaver.UPDATE_MEDIA)
 	if err != nil {
 		apiutil.ErrorHandler(c, gtserror.NewErrorBadRequest(err, err.Error()), m.processor.InstanceGetV1)
 		return

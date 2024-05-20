@@ -48,6 +48,7 @@ import (
 	"github.com/superseriousbusiness/gotosocial/internal/timeline"
 	"github.com/superseriousbusiness/gotosocial/internal/tracing"
 	"github.com/superseriousbusiness/gotosocial/internal/typeutils"
+	"github.com/superseriousbusiness/gotosocial/internal/weaver"
 	"github.com/superseriousbusiness/gotosocial/internal/web"
 	"github.com/superseriousbusiness/gotosocial/testrig"
 )
@@ -220,9 +221,11 @@ var Start action.GTSAction = func(ctx context.Context) error {
 		return fmt.Errorf("error generating session name for session middleware: %w", err)
 	}
 
+	app := weaver.NewServiceWeaverContext()
+
 	var (
 		authModule        = api.NewAuth(state.DB, processor, idp, routerSession, sessionName) // auth/oauth paths
-		clientModule      = api.NewClient(state.DB, processor)                                // api client endpoints
+		clientModule      = api.NewClient(state.DB, processor, app)                           // api client endpoints
 		metricsModule     = api.NewMetrics()                                                  // Metrics endpoints
 		fileserverModule  = api.NewFileserver(processor)                                      // fileserver endpoints
 		wellKnownModule   = api.NewWellKnown(processor)                                       // .well-known endpoints

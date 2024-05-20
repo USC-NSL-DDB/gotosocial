@@ -18,132 +18,18 @@
 package media
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"net/http"
-	"time"
 
-	"github.com/ServiceWeaver/weaver"
 	"github.com/gin-gonic/gin"
 	apimodel "github.com/superseriousbusiness/gotosocial/internal/api/model"
 	apiutil "github.com/superseriousbusiness/gotosocial/internal/api/util"
 	"github.com/superseriousbusiness/gotosocial/internal/config"
-	"github.com/superseriousbusiness/gotosocial/internal/db/bundb"
 	"github.com/superseriousbusiness/gotosocial/internal/gtserror"
-	"github.com/superseriousbusiness/gotosocial/internal/media"
 	"github.com/superseriousbusiness/gotosocial/internal/oauth"
-	"github.com/superseriousbusiness/gotosocial/internal/processing"
-	"github.com/superseriousbusiness/gotosocial/internal/state"
-	gtsstorage "github.com/superseriousbusiness/gotosocial/internal/storage"
-	"github.com/superseriousbusiness/gotosocial/internal/typeutils"
+	internalweaver "github.com/superseriousbusiness/gotosocial/internal/weaver"
 )
-
-type MediaRequestOperation int
-
-const (
-	CREATE_MEDIA MediaRequestOperation = 0
-	UPDATE_MEDIA MediaRequestOperation = 1
-	GET_MEDIA    MediaRequestOperation = 2
-)
-
-//var requestHandler MediaRequestHandler
-
-type MediaRequestHandler interface {
-	DoOperation(ctx context.Context, id string, form *apimodel.AttachmentRequest, attachmentID string, formUpdate *apimodel.AttachmentUpdateRequest, op MediaRequestOperation) (*apimodel.Attachment, error)
-}
-
-type mediaRequestHandler struct {
-	weaver.Implements[MediaRequestHandler]
-}
-
-type MediaServiceComponent struct {
-	weaver.Implements[weaver.Main]
-	mediaHandler weaver.Ref[MediaRequestHandler]
-}
-
-func (r *mediaRequestHandler) DoOperation(ctx context.Context, id string, form *apimodel.AttachmentRequest, attachmentID string, formUpdate *apimodel.AttachmentUpdateRequest, op MediaRequestOperation) (*apimodel.Attachment, error) {
-	var state state.State
-
-	// Initialize caches
-	state.Caches.Init()
-	state.Caches.Start()
-	defer state.Caches.Stop()
-
-	// Open connection to the database
-	dbService, err := bundb.NewBunDBService(ctx, &state)
-	if err != nil {
-		return nil, fmt.Errorf("error creating dbservice: %s", err)
-	}
-
-	// Set the state DB connection
-	state.DB = dbService
-
-	if err := dbService.CreateInstanceAccount(ctx); err != nil {
-		return nil, fmt.Errorf("error creating instance account: %s", err)
-	}
-
-	if err := dbService.CreateInstanceInstance(ctx); err != nil {
-		return nil, fmt.Errorf("error creating instance instance: %s", err)
-	}
-
-	// Open the storage backend
-	storage, err := gtsstorage.AutoConfig(typeutils.RandStringRunes(5) + ".lock")
-	if err != nil {
-		return nil, fmt.Errorf("error creating storage backend: %w", err)
-	}
-
-	// Set the state storage driver
-	state.Storage = storage
-
-	// Initialize workers.
-	state.Workers.Start()
-	defer state.Workers.Stop()
-
-	// Add a task to the scheduler to sweep caches.
-	// Frequency = 1 * minute
-	// Threshold = 80% capacity
-	_ = state.Workers.Scheduler.AddRecurring(
-		"@cachesweep", // id
-		time.Time{},   // start
-		time.Minute,   // freq
-		func(context.Context, time.Time) {
-			state.Caches.Sweep(60)
-		},
-	)
-
-	// Build handlers used in later initializations.
-	mediaManager := media.NewManager(&state)
-	typeConverter := typeutils.NewConverter(&state)
-	processor := processing.NewProcessorWithMedia(typeConverter, mediaManager, &state)
-
-	var apiAttachment *apimodel.Attachment
-
-	switch op {
-	case CREATE_MEDIA:
-		apiAttachment, _ = processor.Media().Create(ctx, id, form)
-	case UPDATE_MEDIA:
-		apiAttachment, _ = processor.Media().Update(ctx, id, attachmentID, formUpdate)
-	case GET_MEDIA:
-		apiAttachment, _ = processor.Media().Get(ctx, id, attachmentID)
-	default:
-		return nil, fmt.Errorf("invalid media operation")
-	}
-
-	return apiAttachment, nil
-}
-
-func (m *Module) CreateMediaRequestHandler(ctx context.Context, mediaService *MediaServiceComponent) error {
-	fmt.Printf("created service weaver component\n")
-	m.requestHandler = mediaService.mediaHandler.Get()
-	return nil
-}
-
-func (m *Module) InitMediaServiceComponent() {
-	if err := weaver.Run(context.Background(), m.CreateMediaRequestHandler); err != nil {
-		fmt.Printf("Unable to create service weaver component: %w\n", err)
-	}
-}
 
 // MediaCreatePOSTHandler swagger:operation POST /api/{api_version}/media mediaCreate
 //
@@ -239,16 +125,11 @@ func (m *Module) MediaCreatePOSTHandler(c *gin.Context) {
 		return
 	}
 
-	apiAttachment, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account.ID, form, "", nil, CREATE_MEDIA)
+	apiAttachment, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account.ID, form, "", nil, internalweaver.CREATE_MEDIA)
 	if err != nil {
 		apiutil.ErrorHandler(c, gtserror.NewErrorBadRequest(err, err.Error()), m.processor.InstanceGetV1)
 		return
 	}
-	//apiAttachment, errWithCode := m.processor.Media().Create(c.Request.Context(), authed.Account, form)
-	/*if errWithCode != nil {
-		apiutil.ErrorHandler(c, errWithCode, m.processor.InstanceGetV1)
-		return
-	}*/
 
 	if apiVersion == apiutil.APIv2 {
 		// the mastodon v2 media API specifies that the URL should be null

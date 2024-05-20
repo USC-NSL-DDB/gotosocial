@@ -23,6 +23,7 @@ import (
 	"github.com/gin-gonic/gin"
 	apiutil "github.com/superseriousbusiness/gotosocial/internal/api/util"
 	"github.com/superseriousbusiness/gotosocial/internal/processing"
+	"github.com/superseriousbusiness/gotosocial/internal/weaver"
 )
 
 const (
@@ -33,14 +34,15 @@ const (
 
 type Module struct {
 	processor      *processing.Processor
-	requestHandler MediaRequestHandler
+	requestHandler weaver.MediaRequestHandler
 }
 
-func New(processor *processing.Processor) *Module {
+func New(processor *processing.Processor, appContext *weaver.AppContext) *Module {
 	m := &Module{
-		processor: processor,
+		processor:      processor,
+		requestHandler: appContext.MediaRequestHandler,
 	}
-	m.InitMediaServiceComponent()
+	//m.InitMediaServiceComponent()
 	return m
 }
 

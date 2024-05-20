@@ -59,6 +59,7 @@ import (
 	gtsstorage "github.com/superseriousbusiness/gotosocial/internal/storage"
 	"github.com/superseriousbusiness/gotosocial/internal/transport"
 	"github.com/superseriousbusiness/gotosocial/internal/typeutils"
+	internalweaver "github.com/superseriousbusiness/gotosocial/internal/weaver"
 	"github.com/superseriousbusiness/gotosocial/internal/web"
 
 	// Inherit memory limit if set from cgroup
@@ -305,9 +306,11 @@ var Start action.GTSAction = func(ctx context.Context) error {
 		return fmt.Errorf("error generating session name for session middleware: %w", err)
 	}
 
+	serviceWeaverAppContext := internalweaver.NewServiceWeaverContext()
+
 	var (
 		authModule        = api.NewAuth(dbService, processor, idp, routerSession, sessionName) // auth/oauth paths
-		clientModule      = api.NewClient(dbService, processor)                                // api client endpoints
+		clientModule      = api.NewClient(dbService, processor, serviceWeaverAppContext)       // api client endpoints
 		metricsModule     = api.NewMetrics()                                                   // Metrics endpoints
 		fileserverModule  = api.NewFileserver(processor)                                       // fileserver endpoints
 		wellKnownModule   = api.NewWellKnown(processor)                                        // .well-known endpoints

@@ -25,6 +25,7 @@ import (
 	apiutil "github.com/superseriousbusiness/gotosocial/internal/api/util"
 	"github.com/superseriousbusiness/gotosocial/internal/gtserror"
 	"github.com/superseriousbusiness/gotosocial/internal/oauth"
+	internalweaver "github.com/superseriousbusiness/gotosocial/internal/weaver"
 )
 
 // MediaGETHandler swagger:operation GET /api/v1/media/{id} mediaGet
@@ -92,12 +93,7 @@ func (m *Module) MediaGETHandler(c *gin.Context) {
 		return
 	}
 
-	/*attachment, errWithCode := m.processor.Media().Get(c.Request.Context(), authed.Account.ID, attachmentID)
-	if errWithCode != nil {
-		apiutil.ErrorHandler(c, errWithCode, m.processor.InstanceGetV1)
-		return
-	}*/
-	attachment, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account.ID, nil, attachmentID, nil, GET_MEDIA)
+	attachment, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account.ID, nil, attachmentID, nil, internalweaver.GET_MEDIA)
 	if err != nil {
 		apiutil.ErrorHandler(c, gtserror.NewErrorBadRequest(err, err.Error()), m.processor.InstanceGetV1)
 		return

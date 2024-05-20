@@ -48,6 +48,7 @@ import (
 	"github.com/superseriousbusiness/gotosocial/internal/middleware"
 	"github.com/superseriousbusiness/gotosocial/internal/processing"
 	"github.com/superseriousbusiness/gotosocial/internal/router"
+	"github.com/superseriousbusiness/gotosocial/internal/weaver"
 )
 
 type Client struct {
@@ -121,7 +122,7 @@ func (c *Client) Route(r *router.Router, m ...gin.HandlerFunc) {
 	c.user.Route(h)
 }
 
-func NewClient(db db.DB, p *processing.Processor) *Client {
+func NewClient(db db.DB, p *processing.Processor, app *weaver.AppContext) *Client {
 	return &Client{
 		processor: p,
 		db:        db,
@@ -139,7 +140,7 @@ func NewClient(db db.DB, p *processing.Processor) *Client {
 		instance:       instance.New(p),
 		lists:          lists.New(p),
 		markers:        markers.New(p),
-		media:          media.New(p),
+		media:          media.New(p, app),
 		notifications:  notifications.New(p),
 		polls:          polls.New(p),
 		preferences:    preferences.New(p),
