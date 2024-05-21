@@ -27,6 +27,7 @@ import (
 )
 
 const (
+	TmpMedia         = "/tmp/gotosocial/"
 	IDKey            = "id"                                    // IDKey is the key for media attachment IDs
 	BasePath         = "/:" + apiutil.APIVersionKey + "/media" // BasePath is the base API path for making media requests through v1 or v2 of the api (for mastodon API compatibility)
 	AttachmentWithID = BasePath + "/:" + IDKey                 // BasePathWithID corresponds to a media attachment with the given ID

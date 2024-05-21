@@ -18,9 +18,14 @@
 package media
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io"
+	"log"
+	"mime/multipart"
+	"os"
+	"path/filepath"
 
 	apimodel "github.com/superseriousbusiness/gotosocial/internal/api/model"
 	"github.com/superseriousbusiness/gotosocial/internal/gtserror"
@@ -28,8 +33,64 @@ import (
 	"github.com/superseriousbusiness/gotosocial/internal/media"
 )
 
+const TmpMedia = "/tmp/gotosocial/"
+
+func createMultipartFileHeader(filePath string) *multipart.FileHeader {
+	// open the file
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	defer file.Close()
+
+	// create a buffer to hold the file in memory
+	var buff bytes.Buffer
+	buffWriter := io.Writer(&buff)
+
+	// create a new form and create a new file field
+	formWriter := multipart.NewWriter(buffWriter)
+	formPart, err := formWriter.CreateFormFile("file", filepath.Base(file.Name()))
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
+	// copy the content of the file to the form's file field
+	if _, err := io.Copy(formPart, file); err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
+	// close the form writer after the copying process is finished
+	// I don't use defer in here to avoid unexpected EOF error
+	formWriter.Close()
+
+	// transform the bytes buffer into a form reader
+	buffReader := bytes.NewReader(buff.Bytes())
+	formReader := multipart.NewReader(buffReader, formWriter.Boundary())
+
+	// read the form components with max stored memory of 1MB
+	multipartForm, err := formReader.ReadForm(1 << 20)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
+	// return the multipart file header
+	files, exists := multipartForm.File["file"]
+	if !exists || len(files) == 0 {
+		log.Fatal("multipart file not exists")
+		return nil
+	}
+
+	return files[0]
+}
+
 // Create creates a new media attachment belonging to the given account, using the request form.
 func (p *Processor) Create(ctx context.Context, id string, form *apimodel.AttachmentRequest) (*apimodel.Attachment, gtserror.WithCode) {
+	fileMultiPart := createMultipartFileHeader(filepath.Join(TmpMedia, form.File.Filename))
+	form.File = fileMultiPart
 	data := func(innerCtx context.Context) (io.ReadCloser, int64, error) {
 		f, err := form.File.Open()
 		return f, form.File.Size, err

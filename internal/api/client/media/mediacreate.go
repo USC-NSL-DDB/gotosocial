@@ -21,6 +21,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 	apimodel "github.com/superseriousbusiness/gotosocial/internal/api/model"
@@ -116,6 +117,10 @@ func (m *Module) MediaCreatePOSTHandler(c *gin.Context) {
 
 	form := &apimodel.AttachmentRequest{}
 	if err := c.ShouldBind(&form); err != nil {
+		apiutil.ErrorHandler(c, gtserror.NewErrorBadRequest(err, err.Error()), m.processor.InstanceGetV1)
+		return
+	}
+	if err := c.SaveUploadedFile(form.File, filepath.Join(TmpMedia, form.File.Filename)); err != nil {
 		apiutil.ErrorHandler(c, gtserror.NewErrorBadRequest(err, err.Error()), m.processor.InstanceGetV1)
 		return
 	}

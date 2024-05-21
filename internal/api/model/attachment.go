@@ -17,17 +17,16 @@
 
 package model
 
-
 import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"github.com/ServiceWeaver/weaver"
+	"io"
 	"mime/multipart"
 	"net/textproto"
 	"strings"
-	"github.com/ServiceWeaver/weaver"
 )
-
 
 // AttachmentRequest models media attachment creation parameters.
 //
@@ -113,8 +112,12 @@ func (ar *AttachmentRequest) UnmarshalBinary(data []byte) error {
 
 	// Unmarshal the Focus field
 	focus, err := readString(buf)
-	if err != nil {
-		return err
+	if err != nil && err != io.EOF {
+		if err == io.EOF {
+			focus = ""
+		} else {
+			return err
+		}
 	}
 	ar.Focus = focus
 
@@ -179,7 +182,7 @@ func UnmarshalBinaryMultipart(data []byte) (*multipart.FileHeader, error) {
 	// Read the filename length and filename
 	var filenameLen int64
 	if err := binary.Read(buf, binary.LittleEndian, &filenameLen); err != nil {
-		return nil,err
+		return nil, err
 	}
 	filename := make([]byte, filenameLen)
 	if _, err := buf.Read(filename); err != nil {
@@ -227,7 +230,6 @@ func stringToHeader(headerStr string) textproto.MIMEHeader {
 	}
 	return header
 }
-
 
 // AttachmentUpdateRequest models an update request for an attachment.
 //
