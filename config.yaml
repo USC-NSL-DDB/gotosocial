@@ -835,7 +835,7 @@ request-id-header: "X-Request-Id"
 
 # Bool. Enable OpenTelemetry based tracing support.
 # Default: false
-tracing-enabled: true
+tracing-enabled: false
 
 # String. Set the transport protocol for the tracing system. Can either be "grpc"
 # for OTLP gRPC, or "http" for OTLP HTTP.
