@@ -17,10 +17,13 @@
 
 package model
 
+import "github.com/ServiceWeaver/weaver"
+
 // Tag represents a hashtag used within the content of a status.
 //
 // swagger:model tag
 type Tag struct {
+	weaver.AutoMarshal
 	// The value of the hashtag after the # sign.
 	// example: helloworld
 	Name string `json:"name"`
@@ -30,5 +33,5 @@ type Tag struct {
 	// History of this hashtag's usage.
 	// Currently just a stub, if provided will always be an empty array.
 	// example: []
-	History *[]any `json:"history,omitempty"`
+	//History *[]any `json:"history,omitempty"`
 }

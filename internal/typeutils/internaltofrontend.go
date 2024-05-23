@@ -649,14 +649,14 @@ func (c *Converter) TagToAPITag(ctx context.Context, t *gtsmodel.Tag, stubHistor
 	return apimodel.Tag{
 		Name: strings.ToLower(t.Name),
 		URL:  uris.URIForTag(t.Name),
-		History: func() *[]any {
+		/*History: func() *[]any {
 			if !stubHistory {
 				return nil
 			}
 
 			h := make([]any, 0)
 			return &h
-		}(),
+		}(),*/
 	}, nil
 }
 
@@ -866,15 +866,15 @@ func (c *Converter) statusToFrontend(
 		Reblogged:          interacts.Reblogged,
 		Pinned:             interacts.Pinned,
 		Content:            s.Content,
-		Reblog:             nil, // Set below.
-		Application:        nil, // Set below.
-		Account:            apiAuthorAccount,
-		MediaAttachments:   apiAttachments,
-		Mentions:           apiMentions,
-		Tags:               apiTags,
-		Emojis:             apiEmojis,
-		Card:               nil, // TODO: implement cards
-		Text:               s.Text,
+		//Reblog:             nil, // Set below.
+		Application:      nil, // Set below.
+		Account:          apiAuthorAccount,
+		MediaAttachments: apiAttachments,
+		Mentions:         apiMentions,
+		Tags:             apiTags,
+		Emojis:           apiEmojis,
+		Card:             nil, // TODO: implement cards
+		Text:             s.Text,
 	}
 
 	// Nullable fields.
@@ -890,14 +890,14 @@ func (c *Converter) statusToFrontend(
 		apiStatus.Language = util.Ptr(s.Language)
 	}
 
-	if s.BoostOf != nil {
+	/*if s.BoostOf != nil {
 		reblog, err := c.StatusToAPIStatus(ctx, s.BoostOf, requestingAccount)
 		if err != nil {
 			return nil, gtserror.Newf("error converting boosted status: %w", err)
 		}
 
 		apiStatus.Reblog = &apimodel.StatusReblogged{reblog}
-	}
+	}*/
 
 	if app := s.CreatedWithApplication; app != nil {
 		apiStatus.Application, err = c.AppToAPIAppPublic(ctx, app)
@@ -1249,10 +1249,10 @@ func (c *Converter) NotificationToAPINotification(ctx context.Context, n *gtsmod
 		}
 	}
 
-	if apiStatus != nil && apiStatus.Reblog != nil {
+	/*if apiStatus != nil && apiStatus.Reblog != nil {
 		// use the actual reblog status for the notifications endpoint
 		apiStatus = apiStatus.Reblog.Status
-	}
+	}*/
 
 	return &apimodel.Notification{
 		ID:        n.ID,

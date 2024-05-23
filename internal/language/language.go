@@ -18,6 +18,8 @@
 package language
 
 import (
+	"bytes"
+	"encoding/binary"
 	"github.com/superseriousbusiness/gotosocial/internal/gtserror"
 	"golang.org/x/text/language"
 	"golang.org/x/text/language/display"
@@ -82,6 +84,86 @@ type Language struct {
 	// Human-readable
 	// language name(s).
 	DisplayStr string
+}
+
+func (l *Language) MarshalBinary() ([]byte, error) {
+	var buf bytes.Buffer
+
+	// Marshal Tag as string
+	tagStr := l.Tag.String()
+	tagStrBytes := []byte(tagStr)
+	tagStrLen := int64(len(tagStrBytes))
+	if err := binary.Write(&buf, binary.LittleEndian, tagStrLen); err != nil {
+		return nil, err
+	}
+	if _, err := buf.Write(tagStrBytes); err != nil {
+		return nil, err
+	}
+
+	// Marshal TagStr
+	tagStrBytes = []byte(l.TagStr)
+	tagStrLen = int64(len(tagStrBytes))
+	if err := binary.Write(&buf, binary.LittleEndian, tagStrLen); err != nil {
+		return nil, err
+	}
+	if _, err := buf.Write(tagStrBytes); err != nil {
+		return nil, err
+	}
+
+	// Marshal DisplayStr
+	displayStrBytes := []byte(l.DisplayStr)
+	displayStrLen := int64(len(displayStrBytes))
+	if err := binary.Write(&buf, binary.LittleEndian, displayStrLen); err != nil {
+		return nil, err
+	}
+	if _, err := buf.Write(displayStrBytes); err != nil {
+		return nil, err
+	}
+
+	return buf.Bytes(), nil
+}
+
+func (l *Language) UnmarshalBinary(data []byte) error {
+	buf := bytes.NewReader(data)
+
+	// Unmarshal Tag as string
+	var tagStrLen int64
+	if err := binary.Read(buf, binary.LittleEndian, &tagStrLen); err != nil {
+		return err
+	}
+	tagStrBytes := make([]byte, tagStrLen)
+	if _, err := buf.Read(tagStrBytes); err != nil {
+		return err
+	}
+	tagStr := string(tagStrBytes)
+	var err error
+	l.Tag, err = language.Parse(tagStr)
+	if err != nil {
+		return err
+	}
+
+	// Unmarshal TagStr
+	if err := binary.Read(buf, binary.LittleEndian, &tagStrLen); err != nil {
+		return err
+	}
+	tagStrBytes = make([]byte, tagStrLen)
+	if _, err := buf.Read(tagStrBytes); err != nil {
+		return err
+	}
+	l.TagStr = string(tagStrBytes)
+
+	// Unmarshal DisplayStr
+	var displayStrLen int64
+	if err := binary.Read(buf, binary.LittleEndian, &displayStrLen); err != nil {
+		return err
+	}
+	displayStrBytes := make([]byte, displayStrLen)
+	if _, err := buf.Read(displayStrBytes); err != nil {
+		return err
+	}
+	l.DisplayStr = string(displayStrBytes)
+
+	return nil
 }
 
 // MarshalText implements encoding.TextMarshaler{}.

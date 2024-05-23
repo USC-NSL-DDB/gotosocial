@@ -20,7 +20,7 @@ package web
 import (
 	"context"
 	"encoding/json"
-	"errors"
+	//"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -125,11 +125,11 @@ func (m *Module) threadGETHandler(c *gin.Context) {
 	}
 
 	// Don't render boosts/reblogs as top-level statuses.
-	if status.Reblog != nil {
+	/*if status.Reblog != nil {
 		err := errors.New("status is a boost wrapper / reblog")
 		apiutil.WebErrorHandler(c, gtserror.NewErrorNotFound(err), instanceGet)
 		return
-	}
+	}*/
 
 	// Fill in the rest of the thread context.
 	context, errWithCode := m.processor.Status().WebContextGet(ctx, targetStatusID)

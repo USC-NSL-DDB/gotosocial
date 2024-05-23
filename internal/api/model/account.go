@@ -18,6 +18,7 @@
 package model
 
 import (
+	"github.com/ServiceWeaver/weaver"
 	"mime/multipart"
 	"net"
 )
@@ -28,6 +29,7 @@ import (
 //
 // swagger:model account
 type Account struct {
+	weaver.AutoMarshal
 	// The account id.
 	// example: 01FBVD42CQ3ZEEVMW180SBX03B
 	ID string `json:"id"`
@@ -98,7 +100,7 @@ type Account struct {
 	Role *AccountRole `json:"role,omitempty"`
 	// If set, indicates that this account is currently inactive, and has migrated to the given account.
 	// Omitted for accounts that haven't moved, and for suspended accounts.
-	Moved *Account `json:"moved,omitempty"`
+	//Moved *Account `json:"moved,omitempty"`
 }
 
 // AccountCreateRequest models account creation parameters.
@@ -237,6 +239,7 @@ type AccountAliasRequest struct {
 //
 // swagger:model accountRole
 type AccountRole struct {
+	weaver.AutoMarshal
 	Name AccountRoleName `json:"name"`
 }
 

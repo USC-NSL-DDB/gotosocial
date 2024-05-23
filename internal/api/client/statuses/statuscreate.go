@@ -21,7 +21,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	apimodel "github.com/superseriousbusiness/gotosocial/internal/api/model"
@@ -170,7 +169,7 @@ func validateNormalizeCreatePoll(form *apimodel.AdvancedStatusCreateForm) error 
 	// Normalize poll expiry if necessary.
 	// If we parsed this as JSON, expires_in
 	// may be either a float64 or a string.
-	if ei := form.Poll.ExpiresInI; ei != nil {
+	/*if ei := form.Poll.ExpiresInI; ei != nil {
 		switch e := ei.(type) {
 		case float64:
 			form.Poll.ExpiresIn = int(e)
@@ -186,7 +185,7 @@ func validateNormalizeCreatePoll(form *apimodel.AdvancedStatusCreateForm) error 
 		default:
 			return fmt.Errorf("could not parse expires_in type %T as integer", ei)
 		}
-	}
+	}*/
 
 	if len(form.Poll.Options) == 0 {
 		return errors.New("poll with no options")

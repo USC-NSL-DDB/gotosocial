@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/ServiceWeaver/weaver"
 	"github.com/ServiceWeaver/weaver/runtime/codegen"
+	"github.com/superseriousbusiness/gotosocial/internal/language"
 )
 
 // weaver.InstanceOf checks.
@@ -45,6 +46,303 @@ please file an issue at https://github.com/ServiceWeaver/weaver/issues.
 // Reflect stub implementations.
 
 // AutoMarshal implementations.
+
+var _ codegen.AutoMarshal = (*Account)(nil)
+
+type __is_Account[T ~struct {
+	weaver.AutoMarshal
+	ID             string       "json:\"id\""
+	Username       string       "json:\"username\""
+	Acct           string       "json:\"acct\""
+	DisplayName    string       "json:\"display_name\""
+	Locked         bool         "json:\"locked\""
+	Discoverable   bool         "json:\"discoverable\""
+	Bot            bool         "json:\"bot\""
+	CreatedAt      string       "json:\"created_at\""
+	Note           string       "json:\"note\""
+	URL            string       "json:\"url\""
+	Avatar         string       "json:\"avatar\""
+	AvatarStatic   string       "json:\"avatar_static\""
+	Header         string       "json:\"header\""
+	HeaderStatic   string       "json:\"header_static\""
+	FollowersCount int          "json:\"followers_count\""
+	FollowingCount int          "json:\"following_count\""
+	StatusesCount  int          "json:\"statuses_count\""
+	LastStatusAt   *string      "json:\"last_status_at\""
+	Emojis         []Emoji      "json:\"emojis\""
+	Fields         []Field      "json:\"fields\""
+	Suspended      bool         "json:\"suspended,omitempty\""
+	MuteExpiresAt  string       "json:\"mute_expires_at,omitempty\""
+	Source         *Source      "json:\"source,omitempty\""
+	CustomCSS      string       "json:\"custom_css,omitempty\""
+	EnableRSS      bool         "json:\"enable_rss,omitempty\""
+	Role           *AccountRole "json:\"role,omitempty\""
+}] struct{}
+
+var _ __is_Account[Account]
+
+func (x *Account) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Account.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.ID)
+	enc.String(x.Username)
+	enc.String(x.Acct)
+	enc.String(x.DisplayName)
+	enc.Bool(x.Locked)
+	enc.Bool(x.Discoverable)
+	enc.Bool(x.Bot)
+	enc.String(x.CreatedAt)
+	enc.String(x.Note)
+	enc.String(x.URL)
+	enc.String(x.Avatar)
+	enc.String(x.AvatarStatic)
+	enc.String(x.Header)
+	enc.String(x.HeaderStatic)
+	enc.Int(x.FollowersCount)
+	enc.Int(x.FollowingCount)
+	enc.Int(x.StatusesCount)
+	serviceweaver_enc_ptr_string_3e89801b(enc, x.LastStatusAt)
+	serviceweaver_enc_slice_Emoji_ecf5fef1(enc, x.Emojis)
+	serviceweaver_enc_slice_Field_ae32f14d(enc, x.Fields)
+	enc.Bool(x.Suspended)
+	enc.String(x.MuteExpiresAt)
+	serviceweaver_enc_ptr_Source_9b9cb798(enc, x.Source)
+	enc.String(x.CustomCSS)
+	enc.Bool(x.EnableRSS)
+	serviceweaver_enc_ptr_AccountRole_30f2fa0a(enc, x.Role)
+}
+
+func (x *Account) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Account.WeaverUnmarshal: nil receiver"))
+	}
+	x.ID = dec.String()
+	x.Username = dec.String()
+	x.Acct = dec.String()
+	x.DisplayName = dec.String()
+	x.Locked = dec.Bool()
+	x.Discoverable = dec.Bool()
+	x.Bot = dec.Bool()
+	x.CreatedAt = dec.String()
+	x.Note = dec.String()
+	x.URL = dec.String()
+	x.Avatar = dec.String()
+	x.AvatarStatic = dec.String()
+	x.Header = dec.String()
+	x.HeaderStatic = dec.String()
+	x.FollowersCount = dec.Int()
+	x.FollowingCount = dec.Int()
+	x.StatusesCount = dec.Int()
+	x.LastStatusAt = serviceweaver_dec_ptr_string_3e89801b(dec)
+	x.Emojis = serviceweaver_dec_slice_Emoji_ecf5fef1(dec)
+	x.Fields = serviceweaver_dec_slice_Field_ae32f14d(dec)
+	x.Suspended = dec.Bool()
+	x.MuteExpiresAt = dec.String()
+	x.Source = serviceweaver_dec_ptr_Source_9b9cb798(dec)
+	x.CustomCSS = dec.String()
+	x.EnableRSS = dec.Bool()
+	x.Role = serviceweaver_dec_ptr_AccountRole_30f2fa0a(dec)
+}
+
+func serviceweaver_enc_ptr_string_3e89801b(enc *codegen.Encoder, arg *string) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		enc.String(*arg)
+	}
+}
+
+func serviceweaver_dec_ptr_string_3e89801b(dec *codegen.Decoder) *string {
+	if !dec.Bool() {
+		return nil
+	}
+	var res string
+	res = dec.String()
+	return &res
+}
+
+func serviceweaver_enc_slice_Emoji_ecf5fef1(enc *codegen.Encoder, arg []Emoji) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		(arg[i]).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_slice_Emoji_ecf5fef1(dec *codegen.Decoder) []Emoji {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]Emoji, n)
+	for i := 0; i < n; i++ {
+		(&res[i]).WeaverUnmarshal(dec)
+	}
+	return res
+}
+
+func serviceweaver_enc_slice_Field_ae32f14d(enc *codegen.Encoder, arg []Field) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		(arg[i]).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_slice_Field_ae32f14d(dec *codegen.Decoder) []Field {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]Field, n)
+	for i := 0; i < n; i++ {
+		(&res[i]).WeaverUnmarshal(dec)
+	}
+	return res
+}
+
+func serviceweaver_enc_ptr_Source_9b9cb798(enc *codegen.Encoder, arg *Source) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Source_9b9cb798(dec *codegen.Decoder) *Source {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Source
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_AccountRole_30f2fa0a(enc *codegen.Encoder, arg *AccountRole) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_AccountRole_30f2fa0a(dec *codegen.Decoder) *AccountRole {
+	if !dec.Bool() {
+		return nil
+	}
+	var res AccountRole
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+var _ codegen.AutoMarshal = (*AccountRole)(nil)
+
+type __is_AccountRole[T ~struct {
+	weaver.AutoMarshal
+	Name AccountRoleName "json:\"name\""
+}] struct{}
+
+var _ __is_AccountRole[AccountRole]
+
+func (x *AccountRole) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("AccountRole.WeaverMarshal: nil receiver"))
+	}
+	enc.String((string)(x.Name))
+}
+
+func (x *AccountRole) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("AccountRole.WeaverUnmarshal: nil receiver"))
+	}
+	*(*string)(&x.Name) = dec.String()
+}
+
+var _ codegen.AutoMarshal = (*AdvancedStatusCreateForm)(nil)
+
+type __is_AdvancedStatusCreateForm[T ~struct {
+	weaver.AutoMarshal
+	StatusCreateRequest
+	AdvancedVisibilityFlagsForm
+}] struct{}
+
+var _ __is_AdvancedStatusCreateForm[AdvancedStatusCreateForm]
+
+func (x *AdvancedStatusCreateForm) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("AdvancedStatusCreateForm.WeaverMarshal: nil receiver"))
+	}
+	(x.StatusCreateRequest).WeaverMarshal(enc)
+	(x.AdvancedVisibilityFlagsForm).WeaverMarshal(enc)
+}
+
+func (x *AdvancedStatusCreateForm) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("AdvancedStatusCreateForm.WeaverUnmarshal: nil receiver"))
+	}
+	(&x.StatusCreateRequest).WeaverUnmarshal(dec)
+	(&x.AdvancedVisibilityFlagsForm).WeaverUnmarshal(dec)
+}
+
+var _ codegen.AutoMarshal = (*AdvancedVisibilityFlagsForm)(nil)
+
+type __is_AdvancedVisibilityFlagsForm[T ~struct {
+	weaver.AutoMarshal
+	Federated *bool "form:\"federated\" json:\"federated\" xml:\"federated\""
+	Boostable *bool "form:\"boostable\" json:\"boostable\" xml:\"boostable\""
+	Replyable *bool "form:\"replyable\" json:\"replyable\" xml:\"replyable\""
+	Likeable  *bool "form:\"likeable\" json:\"likeable\" xml:\"likeable\""
+}] struct{}
+
+var _ __is_AdvancedVisibilityFlagsForm[AdvancedVisibilityFlagsForm]
+
+func (x *AdvancedVisibilityFlagsForm) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("AdvancedVisibilityFlagsForm.WeaverMarshal: nil receiver"))
+	}
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Federated)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Boostable)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Replyable)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Likeable)
+}
+
+func (x *AdvancedVisibilityFlagsForm) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("AdvancedVisibilityFlagsForm.WeaverUnmarshal: nil receiver"))
+	}
+	x.Federated = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.Boostable = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.Replyable = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.Likeable = serviceweaver_dec_ptr_bool_31f02903(dec)
+}
+
+func serviceweaver_enc_ptr_bool_31f02903(enc *codegen.Encoder, arg *bool) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		enc.Bool(*arg)
+	}
+}
+
+func serviceweaver_dec_ptr_bool_31f02903(dec *codegen.Decoder) *bool {
+	if !dec.Bool() {
+		return nil
+	}
+	var res bool
+	res = dec.Bool()
+	return &res
+}
 
 var _ codegen.AutoMarshal = (*Application)(nil)
 
@@ -140,24 +438,6 @@ func (x *Attachment) WeaverUnmarshal(dec *codegen.Decoder) {
 	x.Sensitive = dec.Bool()
 }
 
-func serviceweaver_enc_ptr_string_3e89801b(enc *codegen.Encoder, arg *string) {
-	if arg == nil {
-		enc.Bool(false)
-	} else {
-		enc.Bool(true)
-		enc.String(*arg)
-	}
-}
-
-func serviceweaver_dec_ptr_string_3e89801b(dec *codegen.Decoder) *string {
-	if !dec.Bool() {
-		return nil
-	}
-	var res string
-	res = dec.String()
-	return &res
-}
-
 func serviceweaver_enc_ptr_MediaMeta_cdd23047(enc *codegen.Encoder, arg *MediaMeta) {
 	if arg == nil {
 		enc.Bool(false)
@@ -200,6 +480,132 @@ func (x *AttachmentUpdateRequest) WeaverUnmarshal(dec *codegen.Decoder) {
 	}
 	x.Description = serviceweaver_dec_ptr_string_3e89801b(dec)
 	x.Focus = serviceweaver_dec_ptr_string_3e89801b(dec)
+}
+
+var _ codegen.AutoMarshal = (*Card)(nil)
+
+type __is_Card[T ~struct {
+	weaver.AutoMarshal
+	URL          string "json:\"url\""
+	Title        string "json:\"title\""
+	Description  string "json:\"description\""
+	Type         string "json:\"type\""
+	AuthorName   string "json:\"author_name\""
+	AuthorURL    string "json:\"author_url\""
+	ProviderName string "json:\"provider_name\""
+	ProviderURL  string "json:\"provider_url\""
+	HTML         string "json:\"html\""
+	Width        int    "json:\"width\""
+	Height       int    "json:\"height\""
+	Image        string "json:\"image\""
+	EmbedURL     string "json:\"embed_url\""
+	Blurhash     string "json:\"blurhash\""
+}] struct{}
+
+var _ __is_Card[Card]
+
+func (x *Card) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Card.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.URL)
+	enc.String(x.Title)
+	enc.String(x.Description)
+	enc.String(x.Type)
+	enc.String(x.AuthorName)
+	enc.String(x.AuthorURL)
+	enc.String(x.ProviderName)
+	enc.String(x.ProviderURL)
+	enc.String(x.HTML)
+	enc.Int(x.Width)
+	enc.Int(x.Height)
+	enc.String(x.Image)
+	enc.String(x.EmbedURL)
+	enc.String(x.Blurhash)
+}
+
+func (x *Card) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Card.WeaverUnmarshal: nil receiver"))
+	}
+	x.URL = dec.String()
+	x.Title = dec.String()
+	x.Description = dec.String()
+	x.Type = dec.String()
+	x.AuthorName = dec.String()
+	x.AuthorURL = dec.String()
+	x.ProviderName = dec.String()
+	x.ProviderURL = dec.String()
+	x.HTML = dec.String()
+	x.Width = dec.Int()
+	x.Height = dec.Int()
+	x.Image = dec.String()
+	x.EmbedURL = dec.String()
+	x.Blurhash = dec.String()
+}
+
+var _ codegen.AutoMarshal = (*Emoji)(nil)
+
+type __is_Emoji[T ~struct {
+	weaver.AutoMarshal
+	Shortcode       string "json:\"shortcode\""
+	URL             string "json:\"url\""
+	StaticURL       string "json:\"static_url\""
+	VisibleInPicker bool   "json:\"visible_in_picker\""
+	Category        string "json:\"category,omitempty\""
+}] struct{}
+
+var _ __is_Emoji[Emoji]
+
+func (x *Emoji) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Emoji.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.Shortcode)
+	enc.String(x.URL)
+	enc.String(x.StaticURL)
+	enc.Bool(x.VisibleInPicker)
+	enc.String(x.Category)
+}
+
+func (x *Emoji) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Emoji.WeaverUnmarshal: nil receiver"))
+	}
+	x.Shortcode = dec.String()
+	x.URL = dec.String()
+	x.StaticURL = dec.String()
+	x.VisibleInPicker = dec.Bool()
+	x.Category = dec.String()
+}
+
+var _ codegen.AutoMarshal = (*Field)(nil)
+
+type __is_Field[T ~struct {
+	weaver.AutoMarshal
+	Name       string  "json:\"name\""
+	Value      string  "json:\"value\""
+	VerifiedAt *string "json:\"verified_at\""
+}] struct{}
+
+var _ __is_Field[Field]
+
+func (x *Field) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Field.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.Name)
+	enc.String(x.Value)
+	serviceweaver_enc_ptr_string_3e89801b(enc, x.VerifiedAt)
+}
+
+func (x *Field) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Field.WeaverUnmarshal: nil receiver"))
+	}
+	x.Name = dec.String()
+	x.Value = dec.String()
+	x.VerifiedAt = serviceweaver_dec_ptr_string_3e89801b(dec)
 }
 
 var _ codegen.AutoMarshal = (*MediaDimensions)(nil)
@@ -314,4 +720,761 @@ func serviceweaver_dec_ptr_MediaFocus_2fe6dd21(dec *codegen.Decoder) *MediaFocus
 	var res MediaFocus
 	(&res).WeaverUnmarshal(dec)
 	return &res
+}
+
+var _ codegen.AutoMarshal = (*Mention)(nil)
+
+type __is_Mention[T ~struct {
+	weaver.AutoMarshal
+	ID       string "json:\"id\""
+	Username string "json:\"username\""
+	URL      string "json:\"url\""
+	Acct     string "json:\"acct\""
+}] struct{}
+
+var _ __is_Mention[Mention]
+
+func (x *Mention) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Mention.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.ID)
+	enc.String(x.Username)
+	enc.String(x.URL)
+	enc.String(x.Acct)
+}
+
+func (x *Mention) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Mention.WeaverUnmarshal: nil receiver"))
+	}
+	x.ID = dec.String()
+	x.Username = dec.String()
+	x.URL = dec.String()
+	x.Acct = dec.String()
+}
+
+var _ codegen.AutoMarshal = (*Poll)(nil)
+
+type __is_Poll[T ~struct {
+	weaver.AutoMarshal
+	ID          string       "json:\"id\""
+	ExpiresAt   *string      "json:\"expires_at\""
+	Expired     bool         "json:\"expired\""
+	Multiple    bool         "json:\"multiple\""
+	VotesCount  int          "json:\"votes_count\""
+	VotersCount *int         "json:\"voters_count\""
+	Voted       *bool        "json:\"voted,omitempty\""
+	OwnVotes    *[]int       "json:\"own_votes,omitempty\""
+	Options     []PollOption "json:\"options\""
+	Emojis      []Emoji      "json:\"emojis\""
+}] struct{}
+
+var _ __is_Poll[Poll]
+
+func (x *Poll) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Poll.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.ID)
+	serviceweaver_enc_ptr_string_3e89801b(enc, x.ExpiresAt)
+	enc.Bool(x.Expired)
+	enc.Bool(x.Multiple)
+	enc.Int(x.VotesCount)
+	serviceweaver_enc_ptr_int_98a2a745(enc, x.VotersCount)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Voted)
+	serviceweaver_enc_ptr_slice_int_9f772d8f(enc, x.OwnVotes)
+	serviceweaver_enc_slice_PollOption_bfafa49e(enc, x.Options)
+	serviceweaver_enc_slice_Emoji_ecf5fef1(enc, x.Emojis)
+}
+
+func (x *Poll) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Poll.WeaverUnmarshal: nil receiver"))
+	}
+	x.ID = dec.String()
+	x.ExpiresAt = serviceweaver_dec_ptr_string_3e89801b(dec)
+	x.Expired = dec.Bool()
+	x.Multiple = dec.Bool()
+	x.VotesCount = dec.Int()
+	x.VotersCount = serviceweaver_dec_ptr_int_98a2a745(dec)
+	x.Voted = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.OwnVotes = serviceweaver_dec_ptr_slice_int_9f772d8f(dec)
+	x.Options = serviceweaver_dec_slice_PollOption_bfafa49e(dec)
+	x.Emojis = serviceweaver_dec_slice_Emoji_ecf5fef1(dec)
+}
+
+func serviceweaver_enc_ptr_int_98a2a745(enc *codegen.Encoder, arg *int) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		enc.Int(*arg)
+	}
+}
+
+func serviceweaver_dec_ptr_int_98a2a745(dec *codegen.Decoder) *int {
+	if !dec.Bool() {
+		return nil
+	}
+	var res int
+	res = dec.Int()
+	return &res
+}
+
+func serviceweaver_enc_slice_int_7c8c8866(enc *codegen.Encoder, arg []int) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		enc.Int(arg[i])
+	}
+}
+
+func serviceweaver_dec_slice_int_7c8c8866(dec *codegen.Decoder) []int {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]int, n)
+	for i := 0; i < n; i++ {
+		res[i] = dec.Int()
+	}
+	return res
+}
+
+func serviceweaver_enc_ptr_slice_int_9f772d8f(enc *codegen.Encoder, arg *[]int) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		serviceweaver_enc_slice_int_7c8c8866(enc, *arg)
+	}
+}
+
+func serviceweaver_dec_ptr_slice_int_9f772d8f(dec *codegen.Decoder) *[]int {
+	if !dec.Bool() {
+		return nil
+	}
+	var res []int
+	res = serviceweaver_dec_slice_int_7c8c8866(dec)
+	return &res
+}
+
+func serviceweaver_enc_slice_PollOption_bfafa49e(enc *codegen.Encoder, arg []PollOption) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		(arg[i]).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_slice_PollOption_bfafa49e(dec *codegen.Decoder) []PollOption {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]PollOption, n)
+	for i := 0; i < n; i++ {
+		(&res[i]).WeaverUnmarshal(dec)
+	}
+	return res
+}
+
+var _ codegen.AutoMarshal = (*PollOption)(nil)
+
+type __is_PollOption[T ~struct {
+	weaver.AutoMarshal
+	Title      string "json:\"title\""
+	VotesCount *int   "json:\"votes_count\""
+}] struct{}
+
+var _ __is_PollOption[PollOption]
+
+func (x *PollOption) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("PollOption.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.Title)
+	serviceweaver_enc_ptr_int_98a2a745(enc, x.VotesCount)
+}
+
+func (x *PollOption) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("PollOption.WeaverUnmarshal: nil receiver"))
+	}
+	x.Title = dec.String()
+	x.VotesCount = serviceweaver_dec_ptr_int_98a2a745(dec)
+}
+
+var _ codegen.AutoMarshal = (*PollRequest)(nil)
+
+type __is_PollRequest[T ~struct {
+	weaver.AutoMarshal
+	Options    []string "form:\"options\" json:\"options\" xml:\"options\""
+	ExpiresIn  int      "form:\"expires_in\" xml:\"expires_in\""
+	Multiple   bool     "form:\"multiple\" json:\"multiple\" xml:\"multiple\""
+	HideTotals bool     "form:\"hide_totals\" json:\"hide_totals\" xml:\"hide_totals\""
+}] struct{}
+
+var _ __is_PollRequest[PollRequest]
+
+func (x *PollRequest) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("PollRequest.WeaverMarshal: nil receiver"))
+	}
+	serviceweaver_enc_slice_string_4af10117(enc, x.Options)
+	enc.Int(x.ExpiresIn)
+	enc.Bool(x.Multiple)
+	enc.Bool(x.HideTotals)
+}
+
+func (x *PollRequest) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("PollRequest.WeaverUnmarshal: nil receiver"))
+	}
+	x.Options = serviceweaver_dec_slice_string_4af10117(dec)
+	x.ExpiresIn = dec.Int()
+	x.Multiple = dec.Bool()
+	x.HideTotals = dec.Bool()
+}
+
+func serviceweaver_enc_slice_string_4af10117(enc *codegen.Encoder, arg []string) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		enc.String(arg[i])
+	}
+}
+
+func serviceweaver_dec_slice_string_4af10117(dec *codegen.Decoder) []string {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]string, n)
+	for i := 0; i < n; i++ {
+		res[i] = dec.String()
+	}
+	return res
+}
+
+var _ codegen.AutoMarshal = (*PollVoteRequest)(nil)
+
+type __is_PollVoteRequest[T ~struct {
+	weaver.AutoMarshal
+	Choices []int "form:\"choices[]\" xml:\"choices\""
+}] struct{}
+
+var _ __is_PollVoteRequest[PollVoteRequest]
+
+func (x *PollVoteRequest) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("PollVoteRequest.WeaverMarshal: nil receiver"))
+	}
+	serviceweaver_enc_slice_int_7c8c8866(enc, x.Choices)
+}
+
+func (x *PollVoteRequest) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("PollVoteRequest.WeaverUnmarshal: nil receiver"))
+	}
+	x.Choices = serviceweaver_dec_slice_int_7c8c8866(dec)
+}
+
+var _ codegen.AutoMarshal = (*Source)(nil)
+
+type __is_Source[T ~struct {
+	weaver.AutoMarshal
+	Privacy             Visibility "json:\"privacy\""
+	Sensitive           bool       "json:\"sensitive\""
+	Language            string     "json:\"language\""
+	StatusContentType   string     "json:\"status_content_type\""
+	Note                string     "json:\"note\""
+	Fields              []Field    "json:\"fields\""
+	FollowRequestsCount int        "json:\"follow_requests_count\""
+	AlsoKnownAsURIs     []string   "json:\"also_known_as_uris,omitempty\""
+}] struct{}
+
+var _ __is_Source[Source]
+
+func (x *Source) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Source.WeaverMarshal: nil receiver"))
+	}
+	enc.String((string)(x.Privacy))
+	enc.Bool(x.Sensitive)
+	enc.String(x.Language)
+	enc.String(x.StatusContentType)
+	enc.String(x.Note)
+	serviceweaver_enc_slice_Field_ae32f14d(enc, x.Fields)
+	enc.Int(x.FollowRequestsCount)
+	serviceweaver_enc_slice_string_4af10117(enc, x.AlsoKnownAsURIs)
+}
+
+func (x *Source) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Source.WeaverUnmarshal: nil receiver"))
+	}
+	*(*string)(&x.Privacy) = dec.String()
+	x.Sensitive = dec.Bool()
+	x.Language = dec.String()
+	x.StatusContentType = dec.String()
+	x.Note = dec.String()
+	x.Fields = serviceweaver_dec_slice_Field_ae32f14d(dec)
+	x.FollowRequestsCount = dec.Int()
+	x.AlsoKnownAsURIs = serviceweaver_dec_slice_string_4af10117(dec)
+}
+
+var _ codegen.AutoMarshal = (*Status)(nil)
+
+type __is_Status[T ~struct {
+	weaver.AutoMarshal
+	ID                 string             "json:\"id\""
+	CreatedAt          string             "json:\"created_at\""
+	InReplyToID        *string            "json:\"in_reply_to_id\""
+	InReplyToAccountID *string            "json:\"in_reply_to_account_id\""
+	Sensitive          bool               "json:\"sensitive\""
+	SpoilerText        string             "json:\"spoiler_text\""
+	Visibility         Visibility         "json:\"visibility\""
+	Language           *string            "json:\"language\""
+	URI                string             "json:\"uri\""
+	URL                string             "json:\"url\""
+	RepliesCount       int                "json:\"replies_count\""
+	ReblogsCount       int                "json:\"reblogs_count\""
+	FavouritesCount    int                "json:\"favourites_count\""
+	Favourited         bool               "json:\"favourited\""
+	Reblogged          bool               "json:\"reblogged\""
+	Muted              bool               "json:\"muted\""
+	Bookmarked         bool               "json:\"bookmarked\""
+	Pinned             bool               "json:\"pinned\""
+	Content            string             "json:\"content\""
+	Application        *Application       "json:\"application,omitempty\""
+	Account            *Account           "json:\"account\""
+	MediaAttachments   []*Attachment      "json:\"media_attachments\""
+	Mentions           []Mention          "json:\"mentions\""
+	Tags               []Tag              "json:\"tags\""
+	Emojis             []Emoji            "json:\"emojis\""
+	Card               *Card              "json:\"card\""
+	Poll               *Poll              "json:\"poll\""
+	Text               string             "json:\"text,omitempty\""
+	LanguageTag        *language.Language "json:\"-\""
+	WebPollOptions     []WebPollOption    "json:\"-\""
+	Local              bool               "json:\"-\""
+}] struct{}
+
+var _ __is_Status[Status]
+
+func (x *Status) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Status.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.ID)
+	enc.String(x.CreatedAt)
+	serviceweaver_enc_ptr_string_3e89801b(enc, x.InReplyToID)
+	serviceweaver_enc_ptr_string_3e89801b(enc, x.InReplyToAccountID)
+	enc.Bool(x.Sensitive)
+	enc.String(x.SpoilerText)
+	enc.String((string)(x.Visibility))
+	serviceweaver_enc_ptr_string_3e89801b(enc, x.Language)
+	enc.String(x.URI)
+	enc.String(x.URL)
+	enc.Int(x.RepliesCount)
+	enc.Int(x.ReblogsCount)
+	enc.Int(x.FavouritesCount)
+	enc.Bool(x.Favourited)
+	enc.Bool(x.Reblogged)
+	enc.Bool(x.Muted)
+	enc.Bool(x.Bookmarked)
+	enc.Bool(x.Pinned)
+	enc.String(x.Content)
+	serviceweaver_enc_ptr_Application_e61a46d0(enc, x.Application)
+	serviceweaver_enc_ptr_Account_00e1c196(enc, x.Account)
+	serviceweaver_enc_slice_ptr_Attachment_6c08f3c3(enc, x.MediaAttachments)
+	serviceweaver_enc_slice_Mention_91169596(enc, x.Mentions)
+	serviceweaver_enc_slice_Tag_f79bb9d0(enc, x.Tags)
+	serviceweaver_enc_slice_Emoji_ecf5fef1(enc, x.Emojis)
+	serviceweaver_enc_ptr_Card_4b08a3fe(enc, x.Card)
+	serviceweaver_enc_ptr_Poll_4b9a13e1(enc, x.Poll)
+	enc.String(x.Text)
+	serviceweaver_enc_ptr_Language_32b7d5e1(enc, x.LanguageTag)
+	serviceweaver_enc_slice_WebPollOption_ccc49646(enc, x.WebPollOptions)
+	enc.Bool(x.Local)
+}
+
+func (x *Status) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Status.WeaverUnmarshal: nil receiver"))
+	}
+	x.ID = dec.String()
+	x.CreatedAt = dec.String()
+	x.InReplyToID = serviceweaver_dec_ptr_string_3e89801b(dec)
+	x.InReplyToAccountID = serviceweaver_dec_ptr_string_3e89801b(dec)
+	x.Sensitive = dec.Bool()
+	x.SpoilerText = dec.String()
+	*(*string)(&x.Visibility) = dec.String()
+	x.Language = serviceweaver_dec_ptr_string_3e89801b(dec)
+	x.URI = dec.String()
+	x.URL = dec.String()
+	x.RepliesCount = dec.Int()
+	x.ReblogsCount = dec.Int()
+	x.FavouritesCount = dec.Int()
+	x.Favourited = dec.Bool()
+	x.Reblogged = dec.Bool()
+	x.Muted = dec.Bool()
+	x.Bookmarked = dec.Bool()
+	x.Pinned = dec.Bool()
+	x.Content = dec.String()
+	x.Application = serviceweaver_dec_ptr_Application_e61a46d0(dec)
+	x.Account = serviceweaver_dec_ptr_Account_00e1c196(dec)
+	x.MediaAttachments = serviceweaver_dec_slice_ptr_Attachment_6c08f3c3(dec)
+	x.Mentions = serviceweaver_dec_slice_Mention_91169596(dec)
+	x.Tags = serviceweaver_dec_slice_Tag_f79bb9d0(dec)
+	x.Emojis = serviceweaver_dec_slice_Emoji_ecf5fef1(dec)
+	x.Card = serviceweaver_dec_ptr_Card_4b08a3fe(dec)
+	x.Poll = serviceweaver_dec_ptr_Poll_4b9a13e1(dec)
+	x.Text = dec.String()
+	x.LanguageTag = serviceweaver_dec_ptr_Language_32b7d5e1(dec)
+	x.WebPollOptions = serviceweaver_dec_slice_WebPollOption_ccc49646(dec)
+	x.Local = dec.Bool()
+}
+
+func serviceweaver_enc_ptr_Application_e61a46d0(enc *codegen.Encoder, arg *Application) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Application_e61a46d0(dec *codegen.Decoder) *Application {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Application
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_Account_00e1c196(enc *codegen.Encoder, arg *Account) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Account_00e1c196(dec *codegen.Decoder) *Account {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Account
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_Attachment_51e21580(enc *codegen.Encoder, arg *Attachment) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Attachment_51e21580(dec *codegen.Decoder) *Attachment {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Attachment
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_slice_ptr_Attachment_6c08f3c3(enc *codegen.Encoder, arg []*Attachment) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		serviceweaver_enc_ptr_Attachment_51e21580(enc, arg[i])
+	}
+}
+
+func serviceweaver_dec_slice_ptr_Attachment_6c08f3c3(dec *codegen.Decoder) []*Attachment {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]*Attachment, n)
+	for i := 0; i < n; i++ {
+		res[i] = serviceweaver_dec_ptr_Attachment_51e21580(dec)
+	}
+	return res
+}
+
+func serviceweaver_enc_slice_Mention_91169596(enc *codegen.Encoder, arg []Mention) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		(arg[i]).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_slice_Mention_91169596(dec *codegen.Decoder) []Mention {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]Mention, n)
+	for i := 0; i < n; i++ {
+		(&res[i]).WeaverUnmarshal(dec)
+	}
+	return res
+}
+
+func serviceweaver_enc_slice_Tag_f79bb9d0(enc *codegen.Encoder, arg []Tag) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		(arg[i]).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_slice_Tag_f79bb9d0(dec *codegen.Decoder) []Tag {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]Tag, n)
+	for i := 0; i < n; i++ {
+		(&res[i]).WeaverUnmarshal(dec)
+	}
+	return res
+}
+
+func serviceweaver_enc_ptr_Card_4b08a3fe(enc *codegen.Encoder, arg *Card) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Card_4b08a3fe(dec *codegen.Decoder) *Card {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Card
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_Poll_4b9a13e1(enc *codegen.Encoder, arg *Poll) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Poll_4b9a13e1(dec *codegen.Decoder) *Poll {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Poll
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_Language_32b7d5e1(enc *codegen.Encoder, arg *language.Language) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		enc.EncodeBinaryMarshaler(arg)
+	}
+}
+
+func serviceweaver_dec_ptr_Language_32b7d5e1(dec *codegen.Decoder) *language.Language {
+	if !dec.Bool() {
+		return nil
+	}
+	var res language.Language
+	dec.DecodeBinaryUnmarshaler(&res)
+	return &res
+}
+
+func serviceweaver_enc_slice_WebPollOption_ccc49646(enc *codegen.Encoder, arg []WebPollOption) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		(arg[i]).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_slice_WebPollOption_ccc49646(dec *codegen.Decoder) []WebPollOption {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]WebPollOption, n)
+	for i := 0; i < n; i++ {
+		(&res[i]).WeaverUnmarshal(dec)
+	}
+	return res
+}
+
+var _ codegen.AutoMarshal = (*StatusCreateRequest)(nil)
+
+type __is_StatusCreateRequest[T ~struct {
+	weaver.AutoMarshal
+	Status      string            "form:\"status\" json:\"status\" xml:\"status\""
+	MediaIDs    []string          "form:\"media_ids[]\" json:\"media_ids\" xml:\"media_ids\""
+	Poll        *PollRequest      "form:\"poll\" json:\"poll\" xml:\"poll\""
+	InReplyToID string            "form:\"in_reply_to_id\" json:\"in_reply_to_id\" xml:\"in_reply_to_id\""
+	Sensitive   bool              "form:\"sensitive\" json:\"sensitive\" xml:\"sensitive\""
+	SpoilerText string            "form:\"spoiler_text\" json:\"spoiler_text\" xml:\"spoiler_text\""
+	Visibility  Visibility        "form:\"visibility\" json:\"visibility\" xml:\"visibility\""
+	ScheduledAt string            "form:\"scheduled_at\" json:\"scheduled_at\" xml:\"scheduled_at\""
+	Language    string            "form:\"language\" json:\"language\" xml:\"language\""
+	ContentType StatusContentType "form:\"content_type\" json:\"content_type\" xml:\"content_type\""
+}] struct{}
+
+var _ __is_StatusCreateRequest[StatusCreateRequest]
+
+func (x *StatusCreateRequest) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("StatusCreateRequest.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.Status)
+	serviceweaver_enc_slice_string_4af10117(enc, x.MediaIDs)
+	serviceweaver_enc_ptr_PollRequest_294fb03d(enc, x.Poll)
+	enc.String(x.InReplyToID)
+	enc.Bool(x.Sensitive)
+	enc.String(x.SpoilerText)
+	enc.String((string)(x.Visibility))
+	enc.String(x.ScheduledAt)
+	enc.String(x.Language)
+	enc.String((string)(x.ContentType))
+}
+
+func (x *StatusCreateRequest) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("StatusCreateRequest.WeaverUnmarshal: nil receiver"))
+	}
+	x.Status = dec.String()
+	x.MediaIDs = serviceweaver_dec_slice_string_4af10117(dec)
+	x.Poll = serviceweaver_dec_ptr_PollRequest_294fb03d(dec)
+	x.InReplyToID = dec.String()
+	x.Sensitive = dec.Bool()
+	x.SpoilerText = dec.String()
+	*(*string)(&x.Visibility) = dec.String()
+	x.ScheduledAt = dec.String()
+	x.Language = dec.String()
+	*(*string)(&x.ContentType) = dec.String()
+}
+
+func serviceweaver_enc_ptr_PollRequest_294fb03d(enc *codegen.Encoder, arg *PollRequest) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_PollRequest_294fb03d(dec *codegen.Decoder) *PollRequest {
+	if !dec.Bool() {
+		return nil
+	}
+	var res PollRequest
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+var _ codegen.AutoMarshal = (*Tag)(nil)
+
+type __is_Tag[T ~struct {
+	weaver.AutoMarshal
+	Name string "json:\"name\""
+	URL  string "json:\"url\""
+}] struct{}
+
+var _ __is_Tag[Tag]
+
+func (x *Tag) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Tag.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.Name)
+	enc.String(x.URL)
+}
+
+func (x *Tag) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Tag.WeaverUnmarshal: nil receiver"))
+	}
+	x.Name = dec.String()
+	x.URL = dec.String()
+}
+
+var _ codegen.AutoMarshal = (*WebPollOption)(nil)
+
+type __is_WebPollOption[T ~struct {
+	weaver.AutoMarshal
+	PollOption
+	PollID       string
+	Emojis       []Emoji
+	LanguageTag  *language.Language
+	VoteShare    float32
+	VoteShareStr string
+}] struct{}
+
+var _ __is_WebPollOption[WebPollOption]
+
+func (x *WebPollOption) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("WebPollOption.WeaverMarshal: nil receiver"))
+	}
+	(x.PollOption).WeaverMarshal(enc)
+	enc.String(x.PollID)
+	serviceweaver_enc_slice_Emoji_ecf5fef1(enc, x.Emojis)
+	serviceweaver_enc_ptr_Language_32b7d5e1(enc, x.LanguageTag)
+	enc.Float32(x.VoteShare)
+	enc.String(x.VoteShareStr)
+}
+
+func (x *WebPollOption) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("WebPollOption.WeaverUnmarshal: nil receiver"))
+	}
+	(&x.PollOption).WeaverUnmarshal(dec)
+	x.PollID = dec.String()
+	x.Emojis = serviceweaver_dec_slice_Emoji_ecf5fef1(dec)
+	x.LanguageTag = serviceweaver_dec_ptr_Language_32b7d5e1(dec)
+	x.VoteShare = dec.Float32()
+	x.VoteShareStr = dec.String()
 }

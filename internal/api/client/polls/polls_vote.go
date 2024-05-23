@@ -18,9 +18,7 @@
 package polls
 
 import (
-	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	apimodel "github.com/superseriousbusiness/gotosocial/internal/api/model"
@@ -137,7 +135,7 @@ func bindChoices(c *gin.Context) ([]int, error) {
 	//
 	// Convert submitted choices
 	// into the ints we need.
-	choices := make([]int, 0, len(form.ChoicesI))
+	/*choices := make([]int, 0, len(form.ChoicesI))
 	for _, choiceI := range form.ChoicesI {
 		switch i := choiceI.(type) {
 
@@ -163,7 +161,7 @@ func bindChoices(c *gin.Context) ([]int, error) {
 			// Nothing else will do.
 			return nil, fmt.Errorf("could not parse json poll choice %T to integer", choiceI)
 		}
-	}
+	}*/
 
-	return choices, nil
+	return []int{}, nil
 }

@@ -17,12 +17,16 @@
 
 package model
 
-import "mime/multipart"
+import (
+	"github.com/ServiceWeaver/weaver"
+	"mime/multipart"
+)
 
 // Emoji represents a custom emoji.
 //
 // swagger:model emoji
 type Emoji struct {
+	weaver.AutoMarshal
 	// The name of the custom emoji.
 	// example: blobcat_uwu
 	Shortcode string `json:"shortcode"`

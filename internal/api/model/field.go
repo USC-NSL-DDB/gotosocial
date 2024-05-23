@@ -17,10 +17,13 @@
 
 package model
 
+import "github.com/ServiceWeaver/weaver"
+
 // Field represents a name/value pair to display on an account's profile.
 //
 // swagger:model field
 type Field struct {
+	weaver.AutoMarshal
 	// The key/name of this field.
 	// example: pronouns
 	Name string `json:"name"`

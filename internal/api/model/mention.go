@@ -17,8 +17,11 @@
 
 package model
 
+import "github.com/ServiceWeaver/weaver"
+
 // Mention represents a mention of another account.
 type Mention struct {
+	weaver.AutoMarshal
 	// The ID of the mentioned account.
 	// example: 01FBYJHQWQZAVWFRK9PDYTKGMB
 	ID string `json:"id"`

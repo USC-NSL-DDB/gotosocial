@@ -17,12 +17,16 @@
 
 package model
 
-import "github.com/superseriousbusiness/gotosocial/internal/language"
+import (
+	"github.com/ServiceWeaver/weaver"
+	"github.com/superseriousbusiness/gotosocial/internal/language"
+)
 
 // Status models a status or post.
 //
 // swagger:model status
 type Status struct {
+	weaver.AutoMarshal
 	// ID of the status.
 	// example: 01FBVD42CQ3ZEEVMW180SBX03B
 	ID string `json:"id"`
@@ -77,7 +81,7 @@ type Status struct {
 	Content string `json:"content"`
 	// The status that this status reblogs/boosts.
 	// nullable: true
-	Reblog *StatusReblogged `json:"reblog"`
+	//Reblog *StatusReblogged `json:"reblog"`
 	// The application used to post this status, if visible.
 	Application *Application `json:"application,omitempty"`
 	// The account that authored this status.
@@ -141,16 +145,16 @@ func (s *Status) GetAccountID() string {
 }
 
 func (s *Status) GetBoostOfID() string {
-	if s.Reblog != nil {
+	/*if s.Reblog != nil {
 		return s.Reblog.ID
-	}
+	}*/
 	return ""
 }
 
 func (s *Status) GetBoostOfAccountID() string {
-	if s.Reblog != nil && s.Reblog.Account != nil {
+	/*if s.Reblog != nil && s.Reblog.Account != nil {
 		return s.Reblog.Account.ID
-	}
+	}*/
 	return ""
 }
 
@@ -165,6 +169,7 @@ type StatusReblogged struct {
 //
 // swagger:model statusCreateRequest
 type StatusCreateRequest struct {
+	weaver.AutoMarshal
 	// Text content of the status.
 	// If media_ids is provided, this becomes optional.
 	// Attaching a poll is optional while status is provided.
@@ -231,6 +236,7 @@ const (
 //
 // swagger:parameters statusCreate
 type AdvancedStatusCreateForm struct {
+	weaver.AutoMarshal
 	StatusCreateRequest
 	AdvancedVisibilityFlagsForm
 }
@@ -240,6 +246,7 @@ type AdvancedStatusCreateForm struct {
 //
 // swagger:model advancedVisibilityFlagsForm
 type AdvancedVisibilityFlagsForm struct {
+	weaver.AutoMarshal
 	// This status will be federated beyond the local timeline(s).
 	Federated *bool `form:"federated" json:"federated" xml:"federated"`
 	// This status can be boosted/reblogged.

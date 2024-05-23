@@ -17,10 +17,13 @@
 
 package model
 
+import "github.com/ServiceWeaver/weaver"
+
 // Card represents a rich preview card that is generated using OpenGraph tags from a URL.
 //
 // swagger:model card
 type Card struct {
+	weaver.AutoMarshal
 	// Location of linked resource.
 	// example: https://buzzfeed.com/some/fuckin/buzzfeed/article
 	URL string `json:"url"`

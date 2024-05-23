@@ -17,9 +17,12 @@
 
 package model
 
+import "github.com/ServiceWeaver/weaver"
+
 // Source represents display or publishing preferences of user's own account.
 // Returned as an additional entity when verifying and updated credentials, as an attribute of Account.
 type Source struct {
+	weaver.AutoMarshal
 	// The default post privacy to be used for new statuses.
 	//    public = Public post
 	//    unlisted = Unlisted post

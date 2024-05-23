@@ -17,12 +17,16 @@
 
 package model
 
-import "github.com/superseriousbusiness/gotosocial/internal/language"
+import (
+	"github.com/ServiceWeaver/weaver"
+	"github.com/superseriousbusiness/gotosocial/internal/language"
+)
 
 // Poll represents a poll attached to a status.
 //
 // swagger:model poll
 type Poll struct {
+	weaver.AutoMarshal
 	// The ID of the poll in the database.
 	// example: 01FBYKMD1KBMJ0W6JF1YZ3VY5D
 	ID string `json:"id"`
@@ -64,6 +68,7 @@ type Poll struct {
 //
 // swagger:model pollOption
 type PollOption struct {
+	weaver.AutoMarshal
 	// The text value of the poll option. String.
 	Title string `json:"title"`
 
@@ -75,6 +80,7 @@ type PollOption struct {
 //
 // swagger:model pollRequest
 type PollRequest struct {
+	weaver.AutoMarshal
 	// Array of possible answers.
 	// If provided, media_ids cannot be used, and poll[expires_in] must be provided.
 	// name: poll[options]
@@ -86,7 +92,7 @@ type PollRequest struct {
 
 	// Duration the poll should be open, in seconds.
 	// If provided, media_ids cannot be used, and poll[options] must be provided.
-	ExpiresInI interface{} `json:"expires_in"`
+	//ExpiresInI interface{} `json:"expires_in"`
 
 	// Allow multiple choices on this poll.
 	Multiple bool `form:"multiple" json:"multiple" xml:"multiple"`
@@ -99,18 +105,20 @@ type PollRequest struct {
 //
 // swagger:ignore
 type PollVoteRequest struct {
+	weaver.AutoMarshal
 	// Choices contains poll vote choice indices.
 	Choices []int `form:"choices[]" xml:"choices"`
 
 	// ChoicesI contains poll vote choice
 	// indices. Can be strings or integers.
-	ChoicesI []interface{} `json:"choices"`
+	//ChoicesI []interface{} `json:"choices"`
 }
 
 // WebPollOption models a template-ready poll option entry.
 //
 // swagger:ignore
 type WebPollOption struct {
+	weaver.AutoMarshal
 	PollOption
 
 	// ID of the parent poll.
