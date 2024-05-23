@@ -17,11 +17,15 @@
 
 package gtsmodel
 
-import "time"
+import (
+	"github.com/ServiceWeaver/weaver"
+	"time"
+)
 
 // Application represents an application that can perform actions on behalf of a user.
 // It is used to authorize tokens etc, and is associated with an oauth client id in the database.
 type Application struct {
+	weaver.AutoMarshal
 	ID           string    `bun:"type:CHAR(26),pk,nullzero,notnull,unique"`                    // id of this item in the database
 	CreatedAt    time.Time `bun:"type:timestamptz,nullzero,notnull,default:current_timestamp"` // when was item created
 	UpdatedAt    time.Time `bun:"type:timestamptz,nullzero,notnull,default:current_timestamp"` // when was item last updated

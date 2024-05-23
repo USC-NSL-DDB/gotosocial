@@ -47,6 +47,53 @@ please file an issue at https://github.com/ServiceWeaver/weaver/issues.
 
 // AutoMarshal implementations.
 
+var _ codegen.AutoMarshal = (*Application)(nil)
+
+type __is_Application[T ~struct {
+	weaver.AutoMarshal
+	ID           string    "bun:\"type:CHAR(26),pk,nullzero,notnull,unique\""
+	CreatedAt    time.Time "bun:\"type:timestamptz,nullzero,notnull,default:current_timestamp\""
+	UpdatedAt    time.Time "bun:\"type:timestamptz,nullzero,notnull,default:current_timestamp\""
+	Name         string    "bun:\",notnull\""
+	Website      string    "bun:\",nullzero\""
+	RedirectURI  string    "bun:\",nullzero,notnull\""
+	ClientID     string    "bun:\"type:CHAR(26),nullzero,notnull\""
+	ClientSecret string    "bun:\",nullzero,notnull\""
+	Scopes       string    "bun:\",notnull\""
+}] struct{}
+
+var _ __is_Application[Application]
+
+func (x *Application) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Application.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.ID)
+	enc.EncodeBinaryMarshaler(&x.CreatedAt)
+	enc.EncodeBinaryMarshaler(&x.UpdatedAt)
+	enc.String(x.Name)
+	enc.String(x.Website)
+	enc.String(x.RedirectURI)
+	enc.String(x.ClientID)
+	enc.String(x.ClientSecret)
+	enc.String(x.Scopes)
+}
+
+func (x *Application) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Application.WeaverUnmarshal: nil receiver"))
+	}
+	x.ID = dec.String()
+	dec.DecodeBinaryUnmarshaler(&x.CreatedAt)
+	dec.DecodeBinaryUnmarshaler(&x.UpdatedAt)
+	x.Name = dec.String()
+	x.Website = dec.String()
+	x.RedirectURI = dec.String()
+	x.ClientID = dec.String()
+	x.ClientSecret = dec.String()
+	x.Scopes = dec.String()
+}
+
 var _ codegen.AutoMarshal = (*Emoji)(nil)
 
 type __is_Emoji[T ~struct {

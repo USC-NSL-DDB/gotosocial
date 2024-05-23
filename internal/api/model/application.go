@@ -17,10 +17,13 @@
 
 package model
 
+import "github.com/ServiceWeaver/weaver"
+
 // Application models an api application.
 //
 // swagger:model application
 type Application struct {
+	weaver.AutoMarshal
 	// The ID of the application.
 	// example: 01FBVD42CQ3ZEEVMW180SBX03B
 	ID string `json:"id,omitempty"`

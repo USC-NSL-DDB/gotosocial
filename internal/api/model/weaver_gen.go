@@ -46,6 +46,47 @@ please file an issue at https://github.com/ServiceWeaver/weaver/issues.
 
 // AutoMarshal implementations.
 
+var _ codegen.AutoMarshal = (*Application)(nil)
+
+type __is_Application[T ~struct {
+	weaver.AutoMarshal
+	ID           string "json:\"id,omitempty\""
+	Name         string "json:\"name\""
+	Website      string "json:\"website,omitempty\""
+	RedirectURI  string "json:\"redirect_uri,omitempty\""
+	ClientID     string "json:\"client_id,omitempty\""
+	ClientSecret string "json:\"client_secret,omitempty\""
+	VapidKey     string "json:\"vapid_key,omitempty\""
+}] struct{}
+
+var _ __is_Application[Application]
+
+func (x *Application) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Application.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.ID)
+	enc.String(x.Name)
+	enc.String(x.Website)
+	enc.String(x.RedirectURI)
+	enc.String(x.ClientID)
+	enc.String(x.ClientSecret)
+	enc.String(x.VapidKey)
+}
+
+func (x *Application) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Application.WeaverUnmarshal: nil receiver"))
+	}
+	x.ID = dec.String()
+	x.Name = dec.String()
+	x.Website = dec.String()
+	x.RedirectURI = dec.String()
+	x.ClientID = dec.String()
+	x.ClientSecret = dec.String()
+	x.VapidKey = dec.String()
+}
+
 var _ codegen.AutoMarshal = (*Attachment)(nil)
 
 type __is_Attachment[T ~struct {
