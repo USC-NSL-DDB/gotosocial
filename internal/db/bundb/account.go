@@ -284,7 +284,7 @@ func (a *accountDB) PopulateAccount(ctx context.Context, account *gtsmodel.Accou
 	//
 	// AKA from remotes might have loads of random-ass values
 	// set here, and we don't want to do lots of failing DB calls.
-	if account.IsLocal() && !account.AlsoKnownAsPopulated() {
+	/*if account.IsLocal() && !account.AlsoKnownAsPopulated() {
 		// Account alsoKnownAs accounts are
 		// out-of-date with URIs, repopulate.
 		alsoKnownAs := make([]*gtsmodel.Account, 0)
@@ -302,9 +302,9 @@ func (a *accountDB) PopulateAccount(ctx context.Context, account *gtsmodel.Accou
 		}
 
 		account.AlsoKnownAs = alsoKnownAs
-	}
+	}*/
 
-	if account.MovedTo == nil && account.MovedToURI != "" {
+	/*if account.MovedTo == nil && account.MovedToURI != "" {
 		// Account movedTo is not set, fetch from database.
 		account.MovedTo, err = a.state.DB.GetAccountByURI(
 			gtscontext.SetBarebones(ctx),
@@ -313,7 +313,7 @@ func (a *accountDB) PopulateAccount(ctx context.Context, account *gtsmodel.Accou
 		if err != nil {
 			errs.Appendf("error populating moved to account: %w", err)
 		}
-	}
+	}*/
 
 	if !account.EmojisPopulated() {
 		// Account emojis are out-of-date with IDs, repopulate.

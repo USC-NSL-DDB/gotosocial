@@ -47,6 +47,335 @@ please file an issue at https://github.com/ServiceWeaver/weaver/issues.
 
 // AutoMarshal implementations.
 
+var _ codegen.AutoMarshal = (*Account)(nil)
+
+type __is_Account[T ~struct {
+	weaver.AutoMarshal
+	ID                      string           "bun:\"type:CHAR(26),pk,nullzero,notnull,unique\""
+	CreatedAt               time.Time        "bun:\"type:timestamptz,nullzero,notnull,default:current_timestamp\""
+	UpdatedAt               time.Time        "bun:\"type:timestamptz,nullzero,notnull,default:current_timestamp\""
+	FetchedAt               time.Time        "bun:\"type:timestamptz,nullzero\""
+	Username                string           "bun:\",nullzero,notnull,unique:usernamedomain\""
+	Domain                  string           "bun:\",nullzero,unique:usernamedomain\""
+	AvatarMediaAttachmentID string           "bun:\"type:CHAR(26),nullzero\""
+	AvatarMediaAttachment   *MediaAttachment "bun:\"rel:belongs-to\""
+	AvatarRemoteURL         string           "bun:\",nullzero\""
+	HeaderMediaAttachmentID string           "bun:\"type:CHAR(26),nullzero\""
+	HeaderMediaAttachment   *MediaAttachment "bun:\"rel:belongs-to\""
+	HeaderRemoteURL         string           "bun:\",nullzero\""
+	DisplayName             string           "bun:\"\""
+	EmojiIDs                []string         "bun:\"emojis,array\""
+	Emojis                  []*Emoji         "bun:\"attached_emojis,m2m:account_to_emojis\""
+	Fields                  []*Field
+	FieldsRaw               []*Field
+	Note                    string     "bun:\"\""
+	NoteRaw                 string     "bun:\"\""
+	Memorial                *bool      "bun:\",default:false\""
+	AlsoKnownAsURIs         []string   "bun:\"also_known_as_uris,array\""
+	MovedToURI              string     "bun:\",nullzero\""
+	Bot                     *bool      "bun:\",default:false\""
+	Reason                  string     "bun:\"\""
+	Locked                  *bool      "bun:\",default:true\""
+	Discoverable            *bool      "bun:\",default:false\""
+	Privacy                 Visibility "bun:\",nullzero\""
+	Sensitive               *bool      "bun:\",default:false\""
+	Language                string     "bun:\",nullzero,notnull,default:'en'\""
+	StatusContentType       string     "bun:\",nullzero\""
+	CustomCSS               string     "bun:\",nullzero\""
+	URI                     string     "bun:\",nullzero,notnull,unique\""
+	URL                     string     "bun:\",nullzero,unique\""
+	InboxURI                string     "bun:\",nullzero,unique\""
+	SharedInboxURI          *string    "bun:\"\""
+	OutboxURI               string     "bun:\",nullzero,unique\""
+	FollowingURI            string     "bun:\",nullzero,unique\""
+	FollowersURI            string     "bun:\",nullzero,unique\""
+	FeaturedCollectionURI   string     "bun:\",nullzero,unique\""
+	ActorType               string     "bun:\",nullzero,notnull\""
+	PrivateKey              PrivateKey "bun:\"\""
+	PublicKey               PublicKey  "bun:\",notnull\""
+	PublicKeyURI            string     "bun:\",nullzero,notnull,unique\""
+	PublicKeyExpiresAt      time.Time  "bun:\"type:timestamptz,nullzero\""
+	SensitizedAt            time.Time  "bun:\"type:timestamptz,nullzero\""
+	SilencedAt              time.Time  "bun:\"type:timestamptz,nullzero\""
+	SuspendedAt             time.Time  "bun:\"type:timestamptz,nullzero\""
+	HideCollections         *bool      "bun:\",default:false\""
+	SuspensionOrigin        string     "bun:\"type:CHAR(26),nullzero\""
+	EnableRSS               *bool      "bun:\",default:false\""
+}] struct{}
+
+var _ __is_Account[Account]
+
+func (x *Account) WeaverMarshal(enc *codegen.Encoder) {
+	if x == nil {
+		panic(fmt.Errorf("Account.WeaverMarshal: nil receiver"))
+	}
+	enc.String(x.ID)
+	enc.EncodeBinaryMarshaler(&x.CreatedAt)
+	enc.EncodeBinaryMarshaler(&x.UpdatedAt)
+	enc.EncodeBinaryMarshaler(&x.FetchedAt)
+	enc.String(x.Username)
+	enc.String(x.Domain)
+	enc.String(x.AvatarMediaAttachmentID)
+	serviceweaver_enc_ptr_MediaAttachment_445699da(enc, x.AvatarMediaAttachment)
+	enc.String(x.AvatarRemoteURL)
+	enc.String(x.HeaderMediaAttachmentID)
+	serviceweaver_enc_ptr_MediaAttachment_445699da(enc, x.HeaderMediaAttachment)
+	enc.String(x.HeaderRemoteURL)
+	enc.String(x.DisplayName)
+	serviceweaver_enc_slice_string_4af10117(enc, x.EmojiIDs)
+	serviceweaver_enc_slice_ptr_Emoji_12049057(enc, x.Emojis)
+	serviceweaver_enc_slice_ptr_Field_01350256(enc, x.Fields)
+	serviceweaver_enc_slice_ptr_Field_01350256(enc, x.FieldsRaw)
+	enc.String(x.Note)
+	enc.String(x.NoteRaw)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Memorial)
+	serviceweaver_enc_slice_string_4af10117(enc, x.AlsoKnownAsURIs)
+	enc.String(x.MovedToURI)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Bot)
+	enc.String(x.Reason)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Locked)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Discoverable)
+	enc.String((string)(x.Privacy))
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.Sensitive)
+	enc.String(x.Language)
+	enc.String(x.StatusContentType)
+	enc.String(x.CustomCSS)
+	enc.String(x.URI)
+	enc.String(x.URL)
+	enc.String(x.InboxURI)
+	serviceweaver_enc_ptr_string_3e89801b(enc, x.SharedInboxURI)
+	enc.String(x.OutboxURI)
+	enc.String(x.FollowingURI)
+	enc.String(x.FollowersURI)
+	enc.String(x.FeaturedCollectionURI)
+	enc.String(x.ActorType)
+	enc.EncodeBinaryMarshaler(&x.PrivateKey)
+	enc.EncodeBinaryMarshaler(&x.PublicKey)
+	enc.String(x.PublicKeyURI)
+	enc.EncodeBinaryMarshaler(&x.PublicKeyExpiresAt)
+	enc.EncodeBinaryMarshaler(&x.SensitizedAt)
+	enc.EncodeBinaryMarshaler(&x.SilencedAt)
+	enc.EncodeBinaryMarshaler(&x.SuspendedAt)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.HideCollections)
+	enc.String(x.SuspensionOrigin)
+	serviceweaver_enc_ptr_bool_31f02903(enc, x.EnableRSS)
+}
+
+func (x *Account) WeaverUnmarshal(dec *codegen.Decoder) {
+	if x == nil {
+		panic(fmt.Errorf("Account.WeaverUnmarshal: nil receiver"))
+	}
+	x.ID = dec.String()
+	dec.DecodeBinaryUnmarshaler(&x.CreatedAt)
+	dec.DecodeBinaryUnmarshaler(&x.UpdatedAt)
+	dec.DecodeBinaryUnmarshaler(&x.FetchedAt)
+	x.Username = dec.String()
+	x.Domain = dec.String()
+	x.AvatarMediaAttachmentID = dec.String()
+	x.AvatarMediaAttachment = serviceweaver_dec_ptr_MediaAttachment_445699da(dec)
+	x.AvatarRemoteURL = dec.String()
+	x.HeaderMediaAttachmentID = dec.String()
+	x.HeaderMediaAttachment = serviceweaver_dec_ptr_MediaAttachment_445699da(dec)
+	x.HeaderRemoteURL = dec.String()
+	x.DisplayName = dec.String()
+	x.EmojiIDs = serviceweaver_dec_slice_string_4af10117(dec)
+	x.Emojis = serviceweaver_dec_slice_ptr_Emoji_12049057(dec)
+	x.Fields = serviceweaver_dec_slice_ptr_Field_01350256(dec)
+	x.FieldsRaw = serviceweaver_dec_slice_ptr_Field_01350256(dec)
+	x.Note = dec.String()
+	x.NoteRaw = dec.String()
+	x.Memorial = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.AlsoKnownAsURIs = serviceweaver_dec_slice_string_4af10117(dec)
+	x.MovedToURI = dec.String()
+	x.Bot = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.Reason = dec.String()
+	x.Locked = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.Discoverable = serviceweaver_dec_ptr_bool_31f02903(dec)
+	*(*string)(&x.Privacy) = dec.String()
+	x.Sensitive = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.Language = dec.String()
+	x.StatusContentType = dec.String()
+	x.CustomCSS = dec.String()
+	x.URI = dec.String()
+	x.URL = dec.String()
+	x.InboxURI = dec.String()
+	x.SharedInboxURI = serviceweaver_dec_ptr_string_3e89801b(dec)
+	x.OutboxURI = dec.String()
+	x.FollowingURI = dec.String()
+	x.FollowersURI = dec.String()
+	x.FeaturedCollectionURI = dec.String()
+	x.ActorType = dec.String()
+	dec.DecodeBinaryUnmarshaler(&x.PrivateKey)
+	dec.DecodeBinaryUnmarshaler(&x.PublicKey)
+	x.PublicKeyURI = dec.String()
+	dec.DecodeBinaryUnmarshaler(&x.PublicKeyExpiresAt)
+	dec.DecodeBinaryUnmarshaler(&x.SensitizedAt)
+	dec.DecodeBinaryUnmarshaler(&x.SilencedAt)
+	dec.DecodeBinaryUnmarshaler(&x.SuspendedAt)
+	x.HideCollections = serviceweaver_dec_ptr_bool_31f02903(dec)
+	x.SuspensionOrigin = dec.String()
+	x.EnableRSS = serviceweaver_dec_ptr_bool_31f02903(dec)
+}
+
+func serviceweaver_enc_ptr_MediaAttachment_445699da(enc *codegen.Encoder, arg *MediaAttachment) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_MediaAttachment_445699da(dec *codegen.Decoder) *MediaAttachment {
+	if !dec.Bool() {
+		return nil
+	}
+	var res MediaAttachment
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_slice_string_4af10117(enc *codegen.Encoder, arg []string) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		enc.String(arg[i])
+	}
+}
+
+func serviceweaver_dec_slice_string_4af10117(dec *codegen.Decoder) []string {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]string, n)
+	for i := 0; i < n; i++ {
+		res[i] = dec.String()
+	}
+	return res
+}
+
+func serviceweaver_enc_ptr_Emoji_0cfa95c6(enc *codegen.Encoder, arg *Emoji) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Emoji_0cfa95c6(dec *codegen.Decoder) *Emoji {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Emoji
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_slice_ptr_Emoji_12049057(enc *codegen.Encoder, arg []*Emoji) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		serviceweaver_enc_ptr_Emoji_0cfa95c6(enc, arg[i])
+	}
+}
+
+func serviceweaver_dec_slice_ptr_Emoji_12049057(dec *codegen.Decoder) []*Emoji {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]*Emoji, n)
+	for i := 0; i < n; i++ {
+		res[i] = serviceweaver_dec_ptr_Emoji_0cfa95c6(dec)
+	}
+	return res
+}
+
+func serviceweaver_enc_ptr_Field_0f5504f6(enc *codegen.Encoder, arg *Field) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Field_0f5504f6(dec *codegen.Decoder) *Field {
+	if !dec.Bool() {
+		return nil
+	}
+	var res Field
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_slice_ptr_Field_01350256(enc *codegen.Encoder, arg []*Field) {
+	if arg == nil {
+		enc.Len(-1)
+		return
+	}
+	enc.Len(len(arg))
+	for i := 0; i < len(arg); i++ {
+		serviceweaver_enc_ptr_Field_0f5504f6(enc, arg[i])
+	}
+}
+
+func serviceweaver_dec_slice_ptr_Field_01350256(dec *codegen.Decoder) []*Field {
+	n := dec.Len()
+	if n == -1 {
+		return nil
+	}
+	res := make([]*Field, n)
+	for i := 0; i < n; i++ {
+		res[i] = serviceweaver_dec_ptr_Field_0f5504f6(dec)
+	}
+	return res
+}
+
+func serviceweaver_enc_ptr_bool_31f02903(enc *codegen.Encoder, arg *bool) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		enc.Bool(*arg)
+	}
+}
+
+func serviceweaver_dec_ptr_bool_31f02903(dec *codegen.Decoder) *bool {
+	if !dec.Bool() {
+		return nil
+	}
+	var res bool
+	res = dec.Bool()
+	return &res
+}
+
+func serviceweaver_enc_ptr_string_3e89801b(enc *codegen.Encoder, arg *string) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		enc.String(*arg)
+	}
+}
+
+func serviceweaver_dec_ptr_string_3e89801b(dec *codegen.Decoder) *string {
+	if !dec.Bool() {
+		return nil
+	}
+	var res string
+	res = dec.String()
+	return &res
+}
+
 var _ codegen.AutoMarshal = (*Application)(nil)
 
 type __is_Application[T ~struct {
@@ -178,24 +507,6 @@ func (x *Emoji) WeaverUnmarshal(dec *codegen.Decoder) {
 	x.Category = serviceweaver_dec_ptr_EmojiCategory_ede98795(dec)
 	x.CategoryID = dec.String()
 	x.Cached = serviceweaver_dec_ptr_bool_31f02903(dec)
-}
-
-func serviceweaver_enc_ptr_bool_31f02903(enc *codegen.Encoder, arg *bool) {
-	if arg == nil {
-		enc.Bool(false)
-	} else {
-		enc.Bool(true)
-		enc.Bool(*arg)
-	}
-}
-
-func serviceweaver_dec_ptr_bool_31f02903(dec *codegen.Decoder) *bool {
-	if !dec.Bool() {
-		return nil
-	}
-	var res bool
-	res = dec.Bool()
-	return &res
 }
 
 func serviceweaver_enc_ptr_EmojiCategory_ede98795(enc *codegen.Encoder, arg *EmojiCategory) {

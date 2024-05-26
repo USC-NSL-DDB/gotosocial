@@ -18,7 +18,6 @@
 package cache
 
 import (
-	"crypto/rsa"
 	"time"
 	"unsafe"
 
@@ -230,8 +229,8 @@ func sizeofAccount() uintptr {
 		FollowingURI:            exampleURI,
 		FeaturedCollectionURI:   exampleURI,
 		ActorType:               ap.ActorPerson,
-		PrivateKey:              &rsa.PrivateKey{},
-		PublicKey:               &rsa.PublicKey{},
+		PrivateKey:              gtsmodel.PrivateKey{},
+		PublicKey:               gtsmodel.PublicKey{},
 		PublicKeyURI:            exampleURI,
 		SensitizedAt:            exampleTime,
 		SilencedAt:              exampleTime,

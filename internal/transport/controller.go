@@ -143,7 +143,7 @@ func (c *controller) NewTransportForUsername(ctx context.Context, username strin
 		return nil, fmt.Errorf("error getting account %s from db: %s", username, err)
 	}
 
-	transport, err := c.NewTransport(ourAccount.PublicKeyURI, ourAccount.PrivateKey)
+	transport, err := c.NewTransport(ourAccount.PublicKeyURI, ourAccount.PrivateKey.Key)
 	if err != nil {
 		return nil, fmt.Errorf("error creating transport for user %s: %s", username, err)
 	}

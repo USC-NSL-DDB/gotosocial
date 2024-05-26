@@ -228,7 +228,7 @@ func (c *Converter) ASRepresentationToAccount(ctx context.Context, accountable a
 		return nil, gtserror.SetMalformed(err)
 	}
 
-	acct.PublicKey = pkey
+	acct.PublicKey = gtsmodel.PublicKey{Key: pkey}
 	acct.PublicKeyURI = pkeyURL.String()
 
 	return &acct, nil

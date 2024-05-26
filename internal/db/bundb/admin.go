@@ -133,8 +133,8 @@ func (a *adminDB) NewSignup(ctx context.Context, newSignup gtsmodel.NewSignup) (
 			FollowersURI:          uris.FollowersURI,
 			FeaturedCollectionURI: uris.FeaturedCollectionURI,
 			ActorType:             ap.ActorPerson,
-			PrivateKey:            privKey,
-			PublicKey:             &privKey.PublicKey,
+			PrivateKey:            gtsmodel.PrivateKey{Key: privKey},
+			PublicKey:             gtsmodel.PublicKey{Key: &privKey.PublicKey},
 			PublicKeyURI:          uris.PublicKeyURI,
 		}
 
@@ -255,8 +255,8 @@ func (a *adminDB) CreateInstanceAccount(ctx context.Context) error {
 		Username:              username,
 		DisplayName:           username,
 		URL:                   newAccountURIs.UserURL,
-		PrivateKey:            key,
-		PublicKey:             &key.PublicKey,
+		PrivateKey:            gtsmodel.PrivateKey{Key: key},
+		PublicKey:             gtsmodel.PublicKey{Key: &key.PublicKey},
 		PublicKeyURI:          newAccountURIs.PublicKeyURI,
 		ActorType:             ap.ActorPerson,
 		URI:                   newAccountURIs.UserURI,

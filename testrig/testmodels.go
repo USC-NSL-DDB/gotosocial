@@ -317,8 +317,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:            "http://localhost:8080/users/localhost:8080/following",
 			FeaturedCollectionURI:   "http://localhost:8080/users/localhost:8080/collections/featured",
 			ActorType:               ap.ActorPerson,
-			PrivateKey:              &rsa.PrivateKey{},
-			PublicKey:               &rsa.PublicKey{},
+			PrivateKey:              gtsmodel.PrivateKey{},
+			PublicKey:               gtsmodel.PublicKey{},
 			SensitizedAt:            time.Time{},
 			SilencedAt:              time.Time{},
 			SuspendedAt:             time.Time{},
@@ -354,8 +354,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:            "http://localhost:8080/users/weed_lord420/following",
 			FeaturedCollectionURI:   "http://localhost:8080/users/weed_lord420/collections/featured",
 			ActorType:               ap.ActorPerson,
-			PrivateKey:              &rsa.PrivateKey{},
-			PublicKey:               &rsa.PublicKey{},
+			PrivateKey:              gtsmodel.PrivateKey{},
+			PublicKey:               gtsmodel.PublicKey{},
 			PublicKeyURI:            "http://localhost:8080/users/weed_lord420#main-key",
 			SensitizedAt:            time.Time{},
 			SilencedAt:              time.Time{},
@@ -394,8 +394,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:            "http://localhost:8080/users/admin/following",
 			FeaturedCollectionURI:   "http://localhost:8080/users/admin/collections/featured",
 			ActorType:               ap.ActorPerson,
-			PrivateKey:              &rsa.PrivateKey{},
-			PublicKey:               &rsa.PublicKey{},
+			PrivateKey:              gtsmodel.PrivateKey{},
+			PublicKey:               gtsmodel.PublicKey{},
 			SensitizedAt:            time.Time{},
 			SilencedAt:              time.Time{},
 			SuspendedAt:             time.Time{},
@@ -432,8 +432,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:            "http://localhost:8080/users/the_mighty_zork/following",
 			FeaturedCollectionURI:   "http://localhost:8080/users/the_mighty_zork/collections/featured",
 			ActorType:               ap.ActorPerson,
-			PrivateKey:              &rsa.PrivateKey{},
-			PublicKey:               &rsa.PublicKey{},
+			PrivateKey:              gtsmodel.PrivateKey{},
+			PublicKey:               gtsmodel.PublicKey{},
 			PublicKeyURI:            "http://localhost:8080/users/the_mighty_zork/main-key",
 			SensitizedAt:            time.Time{},
 			SilencedAt:              time.Time{},
@@ -490,8 +490,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:          "http://localhost:8080/users/1happyturtle/following",
 			FeaturedCollectionURI: "http://localhost:8080/users/1happyturtle/collections/featured",
 			ActorType:             ap.ActorPerson,
-			PrivateKey:            &rsa.PrivateKey{},
-			PublicKey:             &rsa.PublicKey{},
+			PrivateKey:            gtsmodel.PrivateKey{},
+			PublicKey:             gtsmodel.PublicKey{},
 			PublicKeyURI:          "http://localhost:8080/users/1happyturtle#main-key",
 			SensitizedAt:          time.Time{},
 			SilencedAt:            time.Time{},
@@ -526,8 +526,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:          "http://fossbros-anonymous.io/users/foss_satan/following",
 			FeaturedCollectionURI: "http://fossbros-anonymous.io/users/foss_satan/collections/featured",
 			ActorType:             ap.ActorPerson,
-			PrivateKey:            &rsa.PrivateKey{},
-			PublicKey:             &rsa.PublicKey{},
+			PrivateKey:            gtsmodel.PrivateKey{},
+			PublicKey:             gtsmodel.PublicKey{},
 			PublicKeyURI:          "http://fossbros-anonymous.io/users/foss_satan/main-key",
 			SensitizedAt:          time.Time{},
 			SilencedAt:            time.Time{},
@@ -562,8 +562,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:          "http://example.org/users/Some_User/following",
 			FeaturedCollectionURI: "http://example.org/users/Some_User/collections/featured",
 			ActorType:             ap.ActorPerson,
-			PrivateKey:            &rsa.PrivateKey{},
-			PublicKey:             &rsa.PublicKey{},
+			PrivateKey:            gtsmodel.PrivateKey{},
+			PublicKey:             gtsmodel.PublicKey{},
 			PublicKeyURI:          "http://example.org/users/Some_User#main-key",
 			SensitizedAt:          time.Time{},
 			SilencedAt:            time.Time{},
@@ -598,8 +598,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:            "http://thequeenisstillalive.technology/users/her_fuckin_maj/following",
 			FeaturedCollectionURI:   "http://thequeenisstillalive.technology/users/her_fuckin_maj/collections/featured",
 			ActorType:               ap.ActorPerson,
-			PrivateKey:              &rsa.PrivateKey{},
-			PublicKey:               &rsa.PublicKey{},
+			PrivateKey:              gtsmodel.PrivateKey{},
+			PublicKey:               gtsmodel.PublicKey{},
 			PublicKeyURI:            "http://thequeenisstillalive.technology/users/her_fuckin_maj#main-key",
 			SensitizedAt:            time.Time{},
 			SilencedAt:              time.Time{},
@@ -634,8 +634,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 			FollowingURI:            "https://xn--xample-ova.org/users/%C3%BCser/following",
 			FeaturedCollectionURI:   "https://xn--xample-ova.org/users/%C3%BCser/collections/featured",
 			ActorType:               ap.ActorPerson,
-			PrivateKey:              &rsa.PrivateKey{},
-			PublicKey:               &rsa.PublicKey{},
+			PrivateKey:              gtsmodel.PrivateKey{},
+			PublicKey:               gtsmodel.PublicKey{},
 			PublicKeyURI:            "https://xn--xample-ova.org/users/%C3%BCser#main-key",
 			SensitizedAt:            time.Time{},
 			SilencedAt:              time.Time{},
@@ -691,8 +691,8 @@ func NewTestAccounts() map[string]*gtsmodel.Account {
 		if !ok {
 			panic(fmt.Sprintf("generated key at index %d is of incorrect type", i))
 		}
-		v.PrivateKey = priv
-		v.PublicKey = &priv.PublicKey
+		v.PrivateKey.Key = priv
+		v.PublicKey.Key = &priv.PublicKey
 	}
 
 	return accounts
@@ -2627,7 +2627,7 @@ func NewTestActivities(accounts map[string]*gtsmodel.Account) map[string]Activit
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan"),
 		TimeMustParse("2022-07-13T12:13:12+02:00"),
 		dmForZork)
-	createDmForZorkSig, createDmForZorkDigest, creatDmForZorkDate := GetSignatureForActivity(createDmForZork, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, URLMustParse(accounts["local_account_1"].InboxURI))
+	createDmForZorkSig, createDmForZorkDigest, creatDmForZorkDate := GetSignatureForActivity(createDmForZork, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, URLMustParse(accounts["local_account_1"].InboxURI))
 
 	replyToTurtle := NewAPNote(
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan/statuses/2f1195a6-5cb0-4475-adf5-92ab9a0147fe"),
@@ -2651,8 +2651,8 @@ func NewTestActivities(accounts map[string]*gtsmodel.Account) map[string]Activit
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan"),
 		TimeMustParse("2022-07-13T12:13:12+02:00"),
 		replyToTurtle)
-	createReplyToTurtleForZorkSig, createReplyToTurtleForZorkDigest, createReplyToTurtleForZorkDate := GetSignatureForActivity(createReplyToTurtle, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, URLMustParse(accounts["local_account_1"].InboxURI))
-	createReplyToTurtleForTurtleSig, createReplyToTurtleForTurtleDigest, createReplyToTurtleForTurtleDate := GetSignatureForActivity(createReplyToTurtle, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, URLMustParse(accounts["local_account_2"].InboxURI))
+	createReplyToTurtleForZorkSig, createReplyToTurtleForZorkDigest, createReplyToTurtleForZorkDate := GetSignatureForActivity(createReplyToTurtle, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, URLMustParse(accounts["local_account_1"].InboxURI))
+	createReplyToTurtleForTurtleSig, createReplyToTurtleForTurtleDigest, createReplyToTurtleForTurtleDate := GetSignatureForActivity(createReplyToTurtle, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, URLMustParse(accounts["local_account_2"].InboxURI))
 
 	forwardedMessage := NewAPNote(
 		URLMustParse("http://example.org/users/Some_User/statuses/afaba698-5740-4e32-a702-af61aa543bc1"),
@@ -2679,7 +2679,7 @@ func NewTestActivities(accounts map[string]*gtsmodel.Account) map[string]Activit
 		URLMustParse("http://example.org/users/Some_User"),
 		TimeMustParse("2022-07-13T12:13:12+02:00"),
 		forwardedMessage)
-	createForwardedMessageSig, createForwardedMessageDigest, createForwardedMessageDate := GetSignatureForActivity(createForwardedMessage, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, URLMustParse(accounts["local_account_1"].InboxURI))
+	createForwardedMessageSig, createForwardedMessageDigest, createForwardedMessageDate := GetSignatureForActivity(createForwardedMessage, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, URLMustParse(accounts["local_account_1"].InboxURI))
 
 	announceForwarded1Zork := newAPAnnounce(
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan/first_announce"),
@@ -2688,7 +2688,7 @@ func NewTestActivities(accounts map[string]*gtsmodel.Account) map[string]Activit
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan/followers"),
 		forwardedMessage,
 	)
-	announceForwarded1ZorkSig, announceForwarded1ZorkDigest, announceForwarded1ZorkDate := GetSignatureForActivity(announceForwarded1Zork, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, URLMustParse(accounts["local_account_1"].InboxURI))
+	announceForwarded1ZorkSig, announceForwarded1ZorkDigest, announceForwarded1ZorkDate := GetSignatureForActivity(announceForwarded1Zork, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, URLMustParse(accounts["local_account_1"].InboxURI))
 
 	announceForwarded1Turtle := newAPAnnounce(
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan/first_announce"),
@@ -2697,7 +2697,7 @@ func NewTestActivities(accounts map[string]*gtsmodel.Account) map[string]Activit
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan/followers"),
 		forwardedMessage,
 	)
-	announceForwarded1TurtleSig, announceForwarded1TurtleDigest, announceForwarded1TurtleDate := GetSignatureForActivity(announceForwarded1Turtle, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, URLMustParse(accounts["local_account_2"].InboxURI))
+	announceForwarded1TurtleSig, announceForwarded1TurtleDigest, announceForwarded1TurtleDate := GetSignatureForActivity(announceForwarded1Turtle, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, URLMustParse(accounts["local_account_2"].InboxURI))
 
 	announceForwarded2Zork := newAPAnnounce(
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan/second_announce"),
@@ -2706,7 +2706,7 @@ func NewTestActivities(accounts map[string]*gtsmodel.Account) map[string]Activit
 		URLMustParse("http://fossbros-anonymous.io/users/foss_satan/followers"),
 		forwardedMessage,
 	)
-	announceForwarded2ZorkSig, announceForwarded2ZorkDigest, announceForwarded2ZorkDate := GetSignatureForActivity(announceForwarded2Zork, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, URLMustParse(accounts["local_account_1"].InboxURI))
+	announceForwarded2ZorkSig, announceForwarded2ZorkDigest, announceForwarded2ZorkDate := GetSignatureForActivity(announceForwarded2Zork, accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, URLMustParse(accounts["local_account_1"].InboxURI))
 
 	deleteForRemoteAccount3 := newAPDelete(
 		URLMustParse("https://somewhere.mysterious/users/rest_in_piss"),
@@ -2715,7 +2715,7 @@ func NewTestActivities(accounts map[string]*gtsmodel.Account) map[string]Activit
 		URLMustParse(accounts["local_account_1"].URI),
 	)
 	// it doesn't really matter what key we use to sign this, since we're not going to be able to verify if anyway
-	keyToSignDelete := accounts["remote_account_1"].PrivateKey
+	keyToSignDelete := accounts["remote_account_1"].PrivateKey.Key
 	deleteForRemoteAccount3Sig, deleteForRemoteAccount3Digest, deleteForRemoteAccount3Date := GetSignatureForActivity(deleteForRemoteAccount3, "https://somewhere.mysterious/users/rest_in_piss#main-key", keyToSignDelete, URLMustParse(accounts["local_account_1"].InboxURI))
 
 	return map[string]ActivityWithSignature{
@@ -3161,7 +3161,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	emojis := NewTestEmojis()
 
 	target = URLMustParse(accounts["local_account_1"].URI)
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceZork := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3169,7 +3169,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(accounts["local_account_1"].PublicKeyURI)
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceZorkPublicKey := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3177,7 +3177,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(statuses["local_account_1_status_1"].URI)
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceLocalAccount1Status1 := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3185,7 +3185,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(strings.ToLower(statuses["local_account_1_status_1"].URI))
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceLocalAccount1Status1Lowercase := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3193,7 +3193,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(statuses["local_account_1_status_1"].URI + "/replies?only_other_accounts=false")
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceLocalAccount1Status1Replies := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3201,7 +3201,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(statuses["local_account_1_status_1"].URI + "/replies?only_other_accounts=false&page=true")
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceLocalAccount1Status1RepliesNext := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3209,7 +3209,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(statuses["local_account_1_status_1"].URI + "/replies?min_id=01FF25D5Q0DH7CHD57CTRS6WK0&only_other_accounts=false")
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceLocalAccount1Status1RepliesLast := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3217,7 +3217,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(accounts["local_account_1"].OutboxURI)
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceZorkOutbox := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3225,7 +3225,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(accounts["local_account_1"].OutboxURI + "?page=true")
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceZorkOutboxFirst := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3233,7 +3233,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(accounts["local_account_1"].OutboxURI + "?page=true&max_id=01F8MHAMCHF6Y650WCRSCP4WMY")
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceZorkOutboxNext := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,
@@ -3241,7 +3241,7 @@ func NewTestDereferenceRequests(accounts map[string]*gtsmodel.Account) map[strin
 	}
 
 	target = URLMustParse(emojis["rainbow"].URI)
-	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey, target)
+	sig, digest, date = GetSignatureForDereference(accounts["remote_account_1"].PublicKeyURI, accounts["remote_account_1"].PrivateKey.Key, target)
 	fossSatanDereferenceEmoji := ActivityWithSignature{
 		SignatureHeader: sig,
 		DigestHeader:    digest,

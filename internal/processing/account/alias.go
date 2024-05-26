@@ -49,7 +49,7 @@ func (p *Processor) Alias(
 		// Simply unset existing
 		// aliases and return early.
 		account.AlsoKnownAsURIs = nil
-		account.AlsoKnownAs = nil
+		//account.AlsoKnownAs = nil
 
 		err := p.state.DB.UpdateAccount(ctx, account, "also_known_as_uris")
 		if err != nil {
@@ -131,19 +131,19 @@ func (p *Processor) Alias(
 
 		// Alrighty-roo, looks good, add this one.
 		account.AlsoKnownAsURIs = append(account.AlsoKnownAsURIs, targetAccount.URI)
-		account.AlsoKnownAs = append(account.AlsoKnownAs, targetAccount)
+		//account.AlsoKnownAs = append(account.AlsoKnownAs, targetAccount)
 	}
 
 	// Dedupe URIs + accounts, in case someone
 	// provided both an account URL and an
 	// account URI above, for the same account.
 	account.AlsoKnownAsURIs = util.Deduplicate(account.AlsoKnownAsURIs)
-	account.AlsoKnownAs = util.DeduplicateFunc(
+	/*account.AlsoKnownAs = util.DeduplicateFunc(
 		account.AlsoKnownAs,
 		func(a *gtsmodel.Account) string {
 			return a.URI
 		},
-	)
+	)*/
 
 	err := p.state.DB.UpdateAccount(ctx, account, "also_known_as_uris")
 	if err != nil {

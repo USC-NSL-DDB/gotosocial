@@ -219,7 +219,7 @@ func (f *Federator) AuthenticateFederatedRequest(ctx context.Context, requestedU
 		// Catch a possible (but very rare) race condition where
 		// we've fetched a key, then fetched the Actor who owns the
 		// key, but the Key of the Actor has changed in the meantime.
-		if !pubKeyAuth.Owner.PublicKey.Equal(pubKeyAuth.FetchedPubKey) {
+		if !pubKeyAuth.Owner.PublicKey.Key.Equal(pubKeyAuth.FetchedPubKey) {
 			err := gtserror.Newf(
 				"key mismatch: fetched key %s does not match pubkey of fetched Actor %s",
 				pubKeyID, pubKeyAuth.Owner.URI,
@@ -271,7 +271,7 @@ func (f *Federator) derefPubKeyDBOnly(
 	}
 
 	return &PubKeyAuth{
-		CachedPubKey: owner.PublicKey,
+		CachedPubKey: owner.PublicKey.Key,
 		OwnerURI:     ownerURI,
 		Owner:        owner,
 	}, nil
@@ -374,7 +374,7 @@ func (f *Federator) derefPubKey(
 	// we now successfully refreshed the pub key,
 	// we should update the account to reflect that.
 	owner := pubKeyAuth.Owner
-	owner.PublicKey = pubKeyAuth.FetchedPubKey
+	owner.PublicKey.Key = pubKeyAuth.FetchedPubKey
 	owner.PublicKeyExpiresAt = time.Time{}
 	if err := f.db.UpdateAccount(
 		ctx,

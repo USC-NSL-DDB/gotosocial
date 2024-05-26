@@ -209,13 +209,13 @@ func (c *Converter) AccountToAPIAccountPublic(ctx context.Context, a *gtsmodel.A
 	}
 
 	// Populate moved.
-	var moved *apimodel.Account
+	/*var moved *apimodel.Account
 	if a.MovedTo != nil {
 		moved, err = c.AccountToAPIAccountPublic(ctx, a.MovedTo)
 		if err != nil {
 			log.Errorf(ctx, "error converting account movedTo: %v", err)
 		}
-	}
+	}*/
 
 	// Bool ptrs should be set, but warn
 	// and use a default if they're not.
@@ -270,7 +270,7 @@ func (c *Converter) AccountToAPIAccountPublic(ctx context.Context, a *gtsmodel.A
 		CustomCSS:      a.CustomCSS,
 		EnableRSS:      enableRSS,
 		Role:           role,
-		Moved:          moved,
+		//Moved:          moved,
 	}
 
 	// Bodge default avatar + header in,
