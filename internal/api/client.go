@@ -146,7 +146,7 @@ func NewClient(db db.DB, p *processing.Processor, app *weaver.AppContext) *Clien
 		preferences:    preferences.New(p),
 		reports:        reports.New(p),
 		search:         search.New(p),
-		statuses:       statuses.New(p),
+		statuses:       statuses.New(p, app),
 		streaming:      streaming.New(p, time.Second*30, 4096),
 		timelines:      timelines.New(p),
 		user:           user.New(p),
