@@ -103,7 +103,7 @@ func (m *Module) StatusCreatePOSTHandler(c *gin.Context) {
 		return
 	}
 
-	apiStatus, errWithCode := m.processor.Status().Create(
+	/*apiStatus, errWithCode := m.processor.Status().Create(
 		c.Request.Context(),
 		authed.Account,
 		authed.Application,
@@ -111,6 +111,11 @@ func (m *Module) StatusCreatePOSTHandler(c *gin.Context) {
 	)
 	if errWithCode != nil {
 		apiutil.ErrorHandler(c, errWithCode, m.processor.InstanceGetV1)
+		return
+	}*/
+	apiStatus, err := m.requestHandler.DoOperation(c.Request.Context(), authed.Account, authed.Application, form)
+	if err != nil {
+		apiutil.ErrorHandler(c, gtserror.NewErrorBadRequest(err, err.Error()), m.processor.InstanceGetV1)
 		return
 	}
 

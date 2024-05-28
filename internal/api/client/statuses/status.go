@@ -22,6 +22,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/superseriousbusiness/gotosocial/internal/processing"
+	"github.com/superseriousbusiness/gotosocial/internal/weaver"
 )
 
 const (
@@ -67,12 +68,14 @@ const (
 )
 
 type Module struct {
-	processor *processing.Processor
+	processor      *processing.Processor
+	requestHandler weaver.StatusRequestHandler
 }
 
-func New(processor *processing.Processor) *Module {
+func New(processor *processing.Processor, appContext *weaver.AppContext) *Module {
 	return &Module{
-		processor: processor,
+		processor:      processor,
+		requestHandler: appContext.StatusRequestHandler,
 	}
 }
 

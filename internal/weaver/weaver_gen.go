@@ -9,6 +9,7 @@ import (
 	"github.com/ServiceWeaver/weaver"
 	"github.com/ServiceWeaver/weaver/runtime/codegen"
 	"github.com/superseriousbusiness/gotosocial/internal/api/model"
+	"github.com/superseriousbusiness/gotosocial/internal/gtsmodel"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
 	"reflect"
@@ -30,7 +31,7 @@ func init() {
 		ReflectStubFn: func(caller func(string, context.Context, []any, []any) error) any {
 			return main_reflect_stub{caller: caller}
 		},
-		RefData: "⟦58ea55b5:wEaVeReDgE:github.com/ServiceWeaver/weaver/Main→github.com/superseriousbusiness/gotosocial/internal/weaver/MediaRequestHandler⟧\n⟦ebe7fb3f:wEaVeRlIsTeNeRs:github.com/ServiceWeaver/weaver/Main→gotosocial⟧\n",
+		RefData: "⟦58ea55b5:wEaVeReDgE:github.com/ServiceWeaver/weaver/Main→github.com/superseriousbusiness/gotosocial/internal/weaver/MediaRequestHandler⟧\n⟦071f22c9:wEaVeReDgE:github.com/ServiceWeaver/weaver/Main→github.com/superseriousbusiness/gotosocial/internal/weaver/StatusRequestHandler⟧\n⟦ebe7fb3f:wEaVeRlIsTeNeRs:github.com/ServiceWeaver/weaver/Main→gotosocial⟧\n",
 	})
 	codegen.Register(codegen.Registration{
 		Name:  "github.com/superseriousbusiness/gotosocial/internal/weaver/MediaRequestHandler",
@@ -50,15 +51,35 @@ func init() {
 		},
 		RefData: "",
 	})
+	codegen.Register(codegen.Registration{
+		Name:  "github.com/superseriousbusiness/gotosocial/internal/weaver/StatusRequestHandler",
+		Iface: reflect.TypeOf((*StatusRequestHandler)(nil)).Elem(),
+		Impl:  reflect.TypeOf(statusRequestHandler{}),
+		LocalStubFn: func(impl any, caller string, tracer trace.Tracer) any {
+			return statusRequestHandler_local_stub{impl: impl.(StatusRequestHandler), tracer: tracer, doOperationMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/superseriousbusiness/gotosocial/internal/weaver/StatusRequestHandler", Method: "DoOperation", Remote: false, Generated: true})}
+		},
+		ClientStubFn: func(stub codegen.Stub, caller string) any {
+			return statusRequestHandler_client_stub{stub: stub, doOperationMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/superseriousbusiness/gotosocial/internal/weaver/StatusRequestHandler", Method: "DoOperation", Remote: true, Generated: true})}
+		},
+		ServerStubFn: func(impl any, addLoad func(uint64, float64)) codegen.Server {
+			return statusRequestHandler_server_stub{impl: impl.(StatusRequestHandler), addLoad: addLoad}
+		},
+		ReflectStubFn: func(caller func(string, context.Context, []any, []any) error) any {
+			return statusRequestHandler_reflect_stub{caller: caller}
+		},
+		RefData: "",
+	})
 }
 
 // weaver.InstanceOf checks.
 var _ weaver.InstanceOf[weaver.Main] = (*App)(nil)
 var _ weaver.InstanceOf[MediaRequestHandler] = (*mediaRequestHandler)(nil)
+var _ weaver.InstanceOf[StatusRequestHandler] = (*statusRequestHandler)(nil)
 
 // weaver.Router checks.
 var _ weaver.Unrouted = (*App)(nil)
 var _ weaver.Unrouted = (*mediaRequestHandler)(nil)
+var _ weaver.Unrouted = (*statusRequestHandler)(nil)
 
 // Local stub implementations.
 
@@ -97,6 +118,35 @@ func (s mediaRequestHandler_local_stub) DoOperation(ctx context.Context, a0 stri
 	}
 
 	return s.impl.DoOperation(ctx, a0, a1, a2, a3, a4)
+}
+
+type statusRequestHandler_local_stub struct {
+	impl               StatusRequestHandler
+	tracer             trace.Tracer
+	doOperationMetrics *codegen.MethodMetrics
+}
+
+// Check that statusRequestHandler_local_stub implements the StatusRequestHandler interface.
+var _ StatusRequestHandler = (*statusRequestHandler_local_stub)(nil)
+
+func (s statusRequestHandler_local_stub) DoOperation(ctx context.Context, a0 *gtsmodel.Account, a1 *gtsmodel.Application, a2 *model.AdvancedStatusCreateForm) (r0 *model.Status, err error) {
+	// Update metrics.
+	begin := s.doOperationMetrics.Begin()
+	defer func() { s.doOperationMetrics.End(begin, err != nil, 0, 0) }()
+	span := trace.SpanFromContext(ctx)
+	if span.SpanContext().IsValid() {
+		// Create a child span for this method.
+		ctx, span = s.tracer.Start(ctx, "weaver.StatusRequestHandler.DoOperation", trace.WithSpanKind(trace.SpanKindInternal))
+		defer func() {
+			if err != nil {
+				span.RecordError(err)
+				span.SetStatus(codes.Error, err.Error())
+			}
+			span.End()
+		}()
+	}
+
+	return s.impl.DoOperation(ctx, a0, a1, a2)
 }
 
 // Client stub implementations.
@@ -167,6 +217,67 @@ func (s mediaRequestHandler_client_stub) DoOperation(ctx context.Context, a0 str
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
 	r0 = serviceweaver_dec_ptr_Attachment_51e21580(dec)
+	err = dec.Error()
+	return
+}
+
+type statusRequestHandler_client_stub struct {
+	stub               codegen.Stub
+	doOperationMetrics *codegen.MethodMetrics
+}
+
+// Check that statusRequestHandler_client_stub implements the StatusRequestHandler interface.
+var _ StatusRequestHandler = (*statusRequestHandler_client_stub)(nil)
+
+func (s statusRequestHandler_client_stub) DoOperation(ctx context.Context, a0 *gtsmodel.Account, a1 *gtsmodel.Application, a2 *model.AdvancedStatusCreateForm) (r0 *model.Status, err error) {
+	// Update metrics.
+	var requestBytes, replyBytes int
+	begin := s.doOperationMetrics.Begin()
+	defer func() { s.doOperationMetrics.End(begin, err != nil, requestBytes, replyBytes) }()
+
+	span := trace.SpanFromContext(ctx)
+	if span.SpanContext().IsValid() {
+		// Create a child span for this method.
+		ctx, span = s.stub.Tracer().Start(ctx, "weaver.StatusRequestHandler.DoOperation", trace.WithSpanKind(trace.SpanKindClient))
+	}
+
+	defer func() {
+		// Catch and return any panics detected during encoding/decoding/rpc.
+		if err == nil {
+			err = codegen.CatchPanics(recover())
+			if err != nil {
+				err = errors.Join(weaver.RemoteCallError, err)
+			}
+		}
+
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, err.Error())
+		}
+		span.End()
+
+	}()
+
+	// Encode arguments.
+	enc := codegen.NewEncoder()
+	serviceweaver_enc_ptr_Account_f8ec541f(enc, a0)
+	serviceweaver_enc_ptr_Application_dfa671fd(enc, a1)
+	serviceweaver_enc_ptr_AdvancedStatusCreateForm_bdbb0079(enc, a2)
+	var shardKey uint64
+
+	// Call the remote method.
+	requestBytes = len(enc.Data())
+	var results []byte
+	results, err = s.stub.Run(ctx, 0, enc.Data(), shardKey)
+	replyBytes = len(results)
+	if err != nil {
+		err = errors.Join(weaver.RemoteCallError, err)
+		return
+	}
+
+	// Decode the results.
+	dec := codegen.NewDecoder(results)
+	r0 = serviceweaver_dec_ptr_Status_6e46148f(dec)
 	err = dec.Error()
 	return
 }
@@ -263,6 +374,53 @@ func (s mediaRequestHandler_server_stub) doOperation(ctx context.Context, args [
 	return enc.Data(), nil
 }
 
+type statusRequestHandler_server_stub struct {
+	impl    StatusRequestHandler
+	addLoad func(key uint64, load float64)
+}
+
+// Check that statusRequestHandler_server_stub implements the codegen.Server interface.
+var _ codegen.Server = (*statusRequestHandler_server_stub)(nil)
+
+// GetStubFn implements the codegen.Server interface.
+func (s statusRequestHandler_server_stub) GetStubFn(method string) func(ctx context.Context, args []byte) ([]byte, error) {
+	switch method {
+	case "DoOperation":
+		return s.doOperation
+	default:
+		return nil
+	}
+}
+
+func (s statusRequestHandler_server_stub) doOperation(ctx context.Context, args []byte) (res []byte, err error) {
+	// Catch and return any panics detected during encoding/decoding/rpc.
+	defer func() {
+		if err == nil {
+			err = codegen.CatchPanics(recover())
+		}
+	}()
+
+	// Decode arguments.
+	dec := codegen.NewDecoder(args)
+	var a0 *gtsmodel.Account
+	a0 = serviceweaver_dec_ptr_Account_f8ec541f(dec)
+	var a1 *gtsmodel.Application
+	a1 = serviceweaver_dec_ptr_Application_dfa671fd(dec)
+	var a2 *model.AdvancedStatusCreateForm
+	a2 = serviceweaver_dec_ptr_AdvancedStatusCreateForm_bdbb0079(dec)
+
+	// TODO(rgrandl): The deferred function above will recover from panics in the
+	// user code: fix this.
+	// Call the local method.
+	r0, appErr := s.impl.DoOperation(ctx, a0, a1, a2)
+
+	// Encode the results.
+	enc := codegen.NewEncoder()
+	serviceweaver_enc_ptr_Status_6e46148f(enc, r0)
+	enc.Error(appErr)
+	return enc.Data(), nil
+}
+
 // Reflect stub implementations.
 
 type main_reflect_stub struct {
@@ -281,6 +439,18 @@ var _ MediaRequestHandler = (*mediaRequestHandler_reflect_stub)(nil)
 
 func (s mediaRequestHandler_reflect_stub) DoOperation(ctx context.Context, a0 string, a1 *model.AttachmentRequest, a2 string, a3 *model.AttachmentUpdateRequest, a4 MediaRequestOperation) (r0 *model.Attachment, err error) {
 	err = s.caller("DoOperation", ctx, []any{a0, a1, a2, a3, a4}, []any{&r0})
+	return
+}
+
+type statusRequestHandler_reflect_stub struct {
+	caller func(string, context.Context, []any, []any) error
+}
+
+// Check that statusRequestHandler_reflect_stub implements the StatusRequestHandler interface.
+var _ StatusRequestHandler = (*statusRequestHandler_reflect_stub)(nil)
+
+func (s statusRequestHandler_reflect_stub) DoOperation(ctx context.Context, a0 *gtsmodel.Account, a1 *gtsmodel.Application, a2 *model.AdvancedStatusCreateForm) (r0 *model.Status, err error) {
+	err = s.caller("DoOperation", ctx, []any{a0, a1, a2}, []any{&r0})
 	return
 }
 
@@ -336,6 +506,78 @@ func serviceweaver_dec_ptr_Attachment_51e21580(dec *codegen.Decoder) *model.Atta
 		return nil
 	}
 	var res model.Attachment
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_Account_f8ec541f(enc *codegen.Encoder, arg *gtsmodel.Account) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Account_f8ec541f(dec *codegen.Decoder) *gtsmodel.Account {
+	if !dec.Bool() {
+		return nil
+	}
+	var res gtsmodel.Account
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_Application_dfa671fd(enc *codegen.Encoder, arg *gtsmodel.Application) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Application_dfa671fd(dec *codegen.Decoder) *gtsmodel.Application {
+	if !dec.Bool() {
+		return nil
+	}
+	var res gtsmodel.Application
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_AdvancedStatusCreateForm_bdbb0079(enc *codegen.Encoder, arg *model.AdvancedStatusCreateForm) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_AdvancedStatusCreateForm_bdbb0079(dec *codegen.Decoder) *model.AdvancedStatusCreateForm {
+	if !dec.Bool() {
+		return nil
+	}
+	var res model.AdvancedStatusCreateForm
+	(&res).WeaverUnmarshal(dec)
+	return &res
+}
+
+func serviceweaver_enc_ptr_Status_6e46148f(enc *codegen.Encoder, arg *model.Status) {
+	if arg == nil {
+		enc.Bool(false)
+	} else {
+		enc.Bool(true)
+		(*arg).WeaverMarshal(enc)
+	}
+}
+
+func serviceweaver_dec_ptr_Status_6e46148f(dec *codegen.Decoder) *model.Status {
+	if !dec.Bool() {
+		return nil
+	}
+	var res model.Status
 	(&res).WeaverUnmarshal(dec)
 	return &res
 }

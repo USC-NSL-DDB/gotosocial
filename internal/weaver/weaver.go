@@ -9,12 +9,14 @@ import (
 
 type App struct {
 	weaver.Implements[weaver.Main]
-	mediaHandler weaver.Ref[MediaRequestHandler]
-	gotosocial   weaver.Listener
+	mediaHandler  weaver.Ref[MediaRequestHandler]
+	statusHandler weaver.Ref[StatusRequestHandler]
+	gotosocial    weaver.Listener
 }
 
 type AppContext struct {
 	MediaRequestHandler   MediaRequestHandler
+	StatusRequestHandler  StatusRequestHandler
 	ServiceWeaverListener *weaver.Listener
 }
 
@@ -26,6 +28,7 @@ func NewServiceWeaverContext() *AppContext {
 
 func (a *AppContext) CreateRequestHandlers(ctx context.Context, app *App) error {
 	a.MediaRequestHandler = app.mediaHandler.Get()
+	a.StatusRequestHandler = app.statusHandler.Get()
 	a.ServiceWeaverListener = &app.gotosocial
 	return nil
 }
