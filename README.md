@@ -1,5 +1,19 @@
 # GoToSocial <!-- omit in toc -->
 
+### Note: Running redis is necessary before running distrubted variant of `gotosocial-weaver`
+
+```
+sudo podman pull docker.io/redis
+sudo podman run -d --name redis_server -p 6379:6379 redis
+```
+
+or
+
+```
+sudo docker pull docker.io/redis
+sudo docker run -d --name redis_server -p 6379:6379 redis
+```
+
 GoToSocial is an [ActivityPub](https://activitypub.rocks/) social network server, written in Golang.
 
 With GoToSocial, you can keep in touch with your friends, post, read, and share images and articles. All without being tracked or advertised to!
