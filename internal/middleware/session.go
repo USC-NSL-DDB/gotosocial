@@ -24,7 +24,8 @@ import (
 	"strings"
 
 	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/memstore"
+	//"github.com/gin-contrib/sessions/memstore"
+	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/superseriousbusiness/gotosocial/internal/config"
 	"github.com/superseriousbusiness/gotosocial/internal/log"
@@ -88,7 +89,8 @@ func SessionName() (string, error) {
 // sessionName, authentication key, and encryption key. Session name can be derived from the
 // SessionName utility function in this package.
 func Session(sessionName string, auth []byte, crypt []byte) gin.HandlerFunc {
-	store := memstore.NewStore(auth, crypt)
+	//store := memstore.NewStore(auth, crypt)
+	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", auth, crypt)
 	store.Options(SessionOptions())
 	return sessions.Sessions(sessionName, store)
 }
