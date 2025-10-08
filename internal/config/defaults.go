@@ -83,7 +83,7 @@ var Defaults = Configuration{
 	MediaCleanupEvery:        24 * time.Hour, // 1/day.
 
 	StorageBackend:       "local",
-	StorageLocalBasePath: "/gotosocial/storage",
+	StorageLocalBasePath: "./gotosocial/storage",
 	StorageS3UseSSL:      true,
 	StorageS3Proxy:       false,
 
@@ -94,7 +94,7 @@ var Defaults = Configuration{
 
 	LetsEncryptEnabled:      false,
 	LetsEncryptPort:         80,
-	LetsEncryptCertDir:      "/gotosocial/storage/certs",
+	LetsEncryptCertDir:      "./gotosocial/storage/certs",
 	LetsEncryptEmailAddress: "",
 
 	TLSCertificateChain: "",

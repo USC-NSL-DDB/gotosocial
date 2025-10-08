@@ -1,0 +1,28 @@
+---
+Framework: "serviceweaverkube"
+SSH:
+  user: root
+  port: 22
+ServiceWeaverConf:
+  service_name: "gotosocial"
+  jump_clinet_host: "10.43.196.54"
+  jump_client_port: 2222
+  jump_client_user: "root"
+  jump_client_password: "password123"
+  jump_client_key_path: "/home/junzhouh/.ssh/id_rsa"
+
+# PostTasks:
+# - name: "Shutdown runtime"
+#   command: "./nu_scripts/stop_rt.sh"
+
+PrerunGdbCommands:
+  # - name: "enable async mode"
+  #   command: "set mi-async on"
+  # - name: "enable non-stop mode"
+  #   command: "set non-stop off"
+  - name: "load extension"
+    command: "source /workspace/extension.py"
+Conf:
+  log_dir: "/home/junzhouh/ddb-rust/tmp/logs"
+  base_dir: "/home/junzhouh/ddb-rust/tmp"
+  api_server_port: 5000

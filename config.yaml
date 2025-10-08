@@ -399,7 +399,6 @@ instance-deliver-to-shared-inboxes: true
 # Default: false
 instance-inject-mastodon-version: false
 
-
 ###########################
 ##### ACCOUNTS CONFIG #####
 ###########################
@@ -546,7 +545,7 @@ storage-backend: "local"
 # Only required when running with the local storage backend.
 # Examples: ["/home/gotosocial/storage", "/opt/gotosocial/datastorage"]
 # Default: "/gotosocial/storage"
-storage-local-base-path: "/gotosocial/storage"
+storage-local-base-path: "./run/gotosocial/storage"
 
 # String. API endpoint of the S3 compatible service.
 # Only required when running with the s3 storage backend.
@@ -655,7 +654,7 @@ letsencrypt-port: 80
 # In any case, make sure GoToSocial has permissions to write to / read from this directory.
 # Examples: ["/home/gotosocial/storage/certs", "/acmecerts"]
 # Default: "/gotosocial/storage/certs"
-letsencrypt-cert-dir: "/gotosocial/storage/certs"
+letsencrypt-cert-dir: "./run/gotosocial/storage/certs"
 
 # String. Email address to use when registering LetsEncrypt certs.
 # Most likely, this will be the email address of the instance administrator.
@@ -877,7 +876,6 @@ metrics-auth-password: ""
 # requests to remote resources (status GETs, media GETs, inbox POSTs, etc).
 
 http-client:
-
   # Duration. Timeout to use for outgoing HTTP requests. If the timeout
   # is exceeded, the connection to the remote server will be dropped.
   # A value of 0s indicates no timeout: this is not advised!

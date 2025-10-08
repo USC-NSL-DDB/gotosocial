@@ -90,7 +90,7 @@ func SessionName() (string, error) {
 // SessionName utility function in this package.
 func Session(sessionName string, auth []byte, crypt []byte) gin.HandlerFunc {
 	//store := memstore.NewStore(auth, crypt)
-	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", auth, crypt)
+	store, _ := redis.NewStore(10, "tcp", "redis:6379", "", auth, crypt)
 	store.Options(SessionOptions())
 	return sessions.Sessions(sessionName, store)
 }

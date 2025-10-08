@@ -42,3 +42,4 @@ shell.nix
 
 sqlite_test*
 tags*
+vendor/

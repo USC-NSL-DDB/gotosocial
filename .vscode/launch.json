@@ -1,20 +1,30 @@
 {
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug Package",
+			"name": "Attach to Process",
 			"type": "go",
+			"request": "attach",
+			"mode": "local",
+			"processId": 2533403
+		},
+		{
+			"type": "ddb",
 			"request": "launch",
-			"mode": "debug",
-			"program": "${workspaceFolder}/cmd/gotosocial",
-			"args": [
-				"testrig", "start"
+			"name": "[ServiceWeaver] Attach DDB",
+			"ddbpath": "/home/junzhouh/DDB/ddb/rust/target/release/ddb",
+			"configFilePath": "/home/junzhouh/gotosocial-weaver/ddbconfig.yml",
+			"debugger_args": [
+				"--console-log",
+				"--console-level",
+				"info",
+				"--file-level",
+				"trace"
 			],
-			"buildFlags": "-tags='netgo osusergo static_build kvformat debugenv'",
-			"env": {
-				"DEBUG": "1",
-			},
-			"cwd": "${workspaceFolder}"
-		}
+			"valuesFormatting": "prettyPrinters",
+		},
 	]
 }
